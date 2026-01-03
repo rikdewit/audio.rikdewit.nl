@@ -1,1 +1,180 @@
-audio landing page test
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rikdewit Audio – Live Sound voor Bands & Evenementen</title>
+  <meta name="description" content="Rikdewit Audio verzorgt professionele live sound voor bands, concerten en evenementen. Betrouwbaar, muzikaal en technisch sterk." />
+  <style>
+    :root {
+      --bg: #0e0e11;
+      --card: #1a1a20;
+      --text: #f2f2f2;
+      --muted: #b5b5c0;
+      --accent: #4fd1c5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+      background: radial-gradient(800px 400px at center top, #1f2933, transparent);
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      font-size: 1.1rem;
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 0.9rem 1.6rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #000;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .card {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    footer {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Rikdewit Audio</h1>
+    <p>Professionele live sound voor bands en evenementen. Helder geluid, muzikale mix en een ontspannen showdag.</p>
+    <a class="cta" href="mailto:info@rikdewitaudio.nl">Neem contact op</a>
+  </header>
+
+  <section>
+    <h2>Wat ik doe</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>Live mixen</h3>
+        <p>FOH- en monitormix voor bands, artiesten en DJ-sets. Altijd afgestemd op de ruimte en het publiek.</p>
+      </div>
+      <div class="card">
+        <h3>Evenementen</h3>
+        <p>Audio voor concerten, festivals en bedrijfsevents. Van opbouw tot afbouw.</p>
+      </div>
+      <div class="card">
+        <h3>Voorbereiding</h3>
+        <p>Stageplots, inputlijsten en duidelijke afstemming vooraf. Geen verrassingen op de showdag.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Waarom Rikdewit Audio</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <ul>
+          <li>Ervaring met live muziek en bands</li>
+          <li>Muzikaal oor én technische kennis</li>
+          <li>Rustig en betrouwbaar op locatie</li>
+          <li>Duidelijke communicatie</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p>Mijn focus ligt op één ding: artiesten laten presteren zonder zich zorgen te maken over het geluid, terwijl het publiek een sterke en gebalanceerde mix hoort.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Werkwijze</h2>
+    <div class="grid grid-3">
+      <div class="card"><strong>1.</strong> Contact & afstemming</div>
+      <div class="card"><strong>2.</strong> Technische voorbereiding</div>
+      <div class="card"><strong>3.</strong> Showdag: soundcheck & mix</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <div class="card">
+      <p>
+        📧 <strong>E-mail:</strong> <a href="mailto:info@rikdewitaudio.nl">info@rikdewitaudio.nl</a><br />
+        📍 <strong>Regio:</strong> Nederland<br />
+        🎚️ Beschikbaar voor losse shows en producties
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Rikdewit Audio · Live Sound & Audio Engineering</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
