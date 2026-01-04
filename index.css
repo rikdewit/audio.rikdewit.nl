@@ -1,0 +1,126 @@
+:root {
+  --bg-main: #f2f4f6;
+  --bg-section: #ffffff;
+  --text-main: #111;
+  --text-muted: #555;
+  --accent: #0ea5e9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+header {
+  background: #ffffff;
+  padding-top: 1rem;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  position: sticky;
+  display: flex;
+}
+
+.top-container {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+}
+
+.svg{
+  padding: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+.logo {
+  padding-top: 0px;
+  width: 20rem;
+  height: auto;
+  display: block;
+
+  
+}
+
+section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.intro {
+  text-align: center;
+}
+
+.intro p {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+}
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.card {
+  background: var(--bg-section);
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.cta {
+  background: var(--bg-section);
+  text-align: center;
+  border-radius: 18px;
+  margin-top: 4rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+}
+
+.cta h2 {
+  margin-top: 0;
+}
+
+.cta a {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1.6rem;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+footer {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+    
