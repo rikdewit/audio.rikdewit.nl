@@ -2,114 +2,128 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rikdewit Audio – Live Sound voor Bands & Evenementen</title>
-  <meta name="description" content="Rikdewit Audio verzorgt professionele live sound voor bands, concerten en evenementen. Betrouwbaar, muzikaal en technisch sterk." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RikdeWit Audio</title>
+
   <style>
     :root {
-      --bg: #0e0e11;
-      --card: #1a1a20;
-      --text: #f2f2f2;
-      --muted: #b5b5c0;
-      --accent: #4fd1c5;
+      --bg-main: #f2f4f6;
+      --bg-section: #ffffff;
+      --text-main: #111;
+      --text-muted: #555;
+      --accent: #0ea5e9;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
       line-height: 1.6;
     }
 
     header {
-      padding: 5rem 1.5rem 4rem;
-      text-align: center;
-      background: radial-gradient(800px 400px at center top, #1f2933, transparent);
+      background: #f6f7f8;
+      padding: 3rem 2rem 2.5rem;
+      display: flex;
+      justify-content: center;
     }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
+    .logo {
+      max-width: 420px;
+      width: 100%;
     }
 
-    header p {
-      color: var(--muted);
-      max-width: 640px;
-      margin: 0 auto 2rem;
-      font-size: 1.1rem;
-    }
-
-    .cta {
-      display: inline-block;
-      padding: 0.9rem 1.6rem;
-      border-radius: 999px;
-      background: var(--accent);
-      color: #000;
-      text-decoration: none;
-      font-weight: 600;
+    .logo svg {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     section {
-      max-width: 1100px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 4rem 1.5rem;
+      padding: 4rem 2rem;
     }
 
-    .grid {
+    .intro {
+      text-align: center;
+    }
+
+    .intro p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 1.5rem auto 0;
+    }
+
+    .services {
       display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 2rem;
-    }
-
-    @media (min-width: 768px) {
-      .grid-3 { grid-template-columns: repeat(3, 1fr); }
-      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+      margin-top: 3rem;
     }
 
     .card {
-      background: var(--card);
+      background: var(--bg-section);
       padding: 2rem;
-      border-radius: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.02em;
-    }
-
-    h3 {
+    .card h3 {
       margin-top: 0;
       margin-bottom: 0.5rem;
     }
 
-    ul {
-      padding-left: 1.2rem;
+    .card p {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .cta {
+      background: var(--bg-section);
+      text-align: center;
+      border-radius: 18px;
+      margin-top: 4rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    }
+
+    .cta h2 {
+      margin-top: 0;
+    }
+
+    .cta a {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.9rem 1.6rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 600;
     }
 
     footer {
-      padding: 3rem 1.5rem;
       text-align: center;
-      color: var(--muted);
-      font-size: 0.95rem;
+      padding: 3rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
     }
 
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
+    
   </style>
 </head>
+
 <body>
 
-  <header>
-    <div class="logo">
-<!-- Inline SVG logo -->
+<header>
+  <div class="logo">
+    <!-- LOGO SVG -->
 <svg width="591" height="341" viewBox="0 0 591 341" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M59.2719 177.56H72.8719C78.2052 177.56 82.0719 178.76 84.4719 181.16C87.0052 183.427 88.2718 186.693 88.2718 190.96C88.2718 193.627 87.4052 196.16 85.6718 198.56C83.9385 200.96 81.6719 202.56 78.8719 203.36L89.6718 223.96H83.8719L73.4719 203.56H64.4718V223.96H59.2719V177.56ZM73.4719 198.96C76.6719 198.96 79.0718 198.227 80.6718 196.76C82.1385 195.427 82.8719 193.493 82.8719 190.96C82.8719 188.427 82.1385 186.36 80.6718 184.76C79.0718 183.293 76.6719 182.56 73.4719 182.56H64.4718V198.96H73.4719Z" fill="black"/>
 <path d="M113.087 219.56H122.287V181.96H113.687V177.56H136.687V181.96H127.487V219.56H137.087V223.96H113.087V219.56Z" fill="black"/>
@@ -144,74 +158,45 @@
 <defs>
 <clipPath id="paint0_angular_1_93_clip_path"><path d="M26.1719 157.16V39.16H38.1719V157.16H26.1719ZM56.1719 157.16V39.16H62.1719V157.16H56.1719ZM68.1719 157.16V39.16H86.1719V157.16H68.1719ZM78.1875 157.16V39.16H90.1875V157.16H78.1875ZM108.188 157.16V39.16H114.188V157.16H108.188ZM132.188 157.16V39.16H138.188V157.16H132.188ZM130.203 157.16V39.16H136.203V157.16H130.203ZM142.203 157.16V39.16H154.203V157.16H142.203ZM172.203 157.16V39.16H190.203V157.16H172.203ZM182.219 157.16V39.16H194.219V157.16H182.219ZM200.219 157.16V39.16H212.219V157.16H200.219ZM224.219 157.16V39.16H236.219V157.16H224.219ZM234.234 157.16V39.16H240.234V157.16H234.234ZM246.234 157.16V39.16H258.234V157.16H246.234ZM276.234 157.16V39.16H282.234V157.16H276.234ZM286.25 157.16V39.16H292.25V157.16H286.25ZM310.25 157.16V39.16H322.25V157.16H310.25ZM328.25 157.16V39.16H334.25V157.16H328.25ZM338.266 157.16V39.16H350.266V157.16H338.266ZM356.266 157.16V39.16H368.266V157.16H356.266ZM380.266 157.16V39.16H392.266V157.16H380.266ZM390.281 157.16V39.16H408.281V157.16H390.281ZM414.281 157.16V39.16H420.281V157.16H414.281ZM438.281 157.16V39.16H450.281V157.16H438.281ZM442.297 157.16V39.16H454.297V157.16H442.297ZM472.297 157.16V39.16H478.297V157.16H472.297ZM496.297 157.16V39.16H502.297V157.16H496.297ZM494.312 157.16V39.16H506.313V157.16H494.312ZM512.313 157.16V39.16H530.313V157.16H512.313ZM548.313 157.16V39.16H554.313V157.16H548.313Z"/></clipPath></defs>
 </svg>
-</div>
-    <h1>Rikdewit Audio</h1>
-    <p>Professionele live sound voor bands en evenementen. Helder geluid, muzikale mix en een ontspannen showdag.</p>
-    <a class="cta" href="mailto:info@rikdewitaudio.nl">Neem contact op</a>
-  </header>
 
-  <section>
-    <h2>Wat ik doe</h2>
-    <div class="grid grid-3">
-      <div class="card">
-        <h3>Live mixen</h3>
-        <p>FOH- en monitormix voor bands, artiesten en DJ-sets. Altijd afgestemd op de ruimte en het publiek.</p>
-      </div>
-      <div class="card">
-        <h3>Evenementen</h3>
-        <p>Audio voor concerten, festivals en bedrijfsevents. Van opbouw tot afbouw.</p>
-      </div>
-      <div class="card">
-        <h3>Voorbereiding</h3>
-        <p>Stageplots, inputlijsten en duidelijke afstemming vooraf. Geen verrassingen op de showdag.</p>
-      </div>
-    </div>
-  </section>
+  </div>
+</header>
 
-  <section>
-    <h2>Waarom Rikdewit Audio</h2>
-    <div class="grid grid-2">
-      <div class="card">
-        <ul>
-          <li>Ervaring met live muziek en bands</li>
-          <li>Muzikaal oor én technische kennis</li>
-          <li>Rustig en betrouwbaar op locatie</li>
-          <li>Duidelijke communicatie</li>
-        </ul>
-      </div>
-      <div class="card">
-        <p>Mijn focus ligt op één ding: artiesten laten presteren zonder zich zorgen te maken over het geluid, terwijl het publiek een sterke en gebalanceerde mix hoort.</p>
-      </div>
-    </div>
-  </section>
+<section class="intro">
+  <p>
+    Live audio voor bands, artiesten en evenementen.  
+    Van kleine clubshows tot volle zalen — helder, strak en betrouwbaar geluid.
+  </p>
+</section>
 
-  <section>
-    <h2>Werkwijze</h2>
-    <div class="grid grid-3">
-      <div class="card"><strong>1.</strong> Contact & afstemming</div>
-      <div class="card"><strong>2.</strong> Technische voorbereiding</div>
-      <div class="card"><strong>3.</strong> Showdag: soundcheck & mix</div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Contact</h2>
+<section>
+  <div class="services">
     <div class="card">
-      <p>
-        📧 <strong>E-mail:</strong> <a href="mailto:info@rikdewitaudio.nl">info@rikdewitaudio.nl</a><br />
-        📍 <strong>Regio:</strong> Nederland<br />
-        🎚️ Beschikbaar voor losse shows en producties
-      </p>
+      <h3>Live mixing</h3>
+      <p>Front-of-house en monitor mixen voor bands en artiesten.</p>
     </div>
-  </section>
 
-  <footer>
-    <p>© <span id="year"></span> Rikdewit Audio · Live Sound & Audio Engineering</p>
-  </footer>
+    <div class="card">
+      <h3>Evenementen</h3>
+      <p>Geluid voor shows, presentaties en kleinschalige festivals.</p>
+    </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+    <div class="card">
+      <h3>Technische support</h3>
+      <p>Opbouw, soundcheck en ondersteuning tijdens het event.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Boeking of vragen?</h2>
+  <p>Neem gerust contact op voor beschikbaarheid of een offerte.</p>
+  <a href="mailto:info@rikdewitaudio.nl">Mail me</a>
+</section>
+
+<footer>
+  © RikdeWit Audio
+</footer>
 
 </body>
 </html>
