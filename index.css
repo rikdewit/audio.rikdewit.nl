@@ -4,15 +4,13 @@
   --text-main: #111;
   --text-muted: #555;
   --accent: #0ea5e9;
+  --scale: clamp(2.5em, 4vw, 3.5em);
+  --text-scale: clamp(2.5em, 4.3vw, 4em);
 }
 
 * {
   box-sizing: border-box;
   
-}
-
-*, *::before, *::after {
-    box-sizing: border-box;
 }
 
 
@@ -47,28 +45,20 @@ header {
   position: relative;
   z-index: -1;
 
+  font-size: calc(.7 * var(--text-scale)) ;
+
 }
 
 
 .line{
-  width: 74%;
+  width: calc(5 * var(--scale));
   position: relative;
   justify-content: center;
   z-index: -1;
-  animation-name: fadeInUp;
-  animation-duration: 1s;
-  animation-timeline: view(0 665px);
-  animation-range: entry 0% exit 100%;
+  margin-top: calc(.2 * var(--scale));
+  margin-bottom: calc(.2 * var(--scale));
 
 
-}
-
-.sublogo{
-  justify-content: center;
-  text-align: center;
-  padding: 0;
-  width: 20rem;
-  line-height: 1;
 }
 
 .subtitle{
@@ -77,13 +67,20 @@ header {
   text-align: center;
   position: relative;
   z-index: -1;
-  margin-top: .5rem;
+  /* margin-top: calc(.1 * var(--scale)); */
+  font-size: calc(.5 * var(--text-scale));
 
-  animation-name: fadeInUp;
-  animation-duration: auto;
-  animation-timeline: view(0 660px);
-  animation-range: entry 0% exit 100%;
 }
+
+.sublogo{
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+  width: auto;
+  line-height: 1;
+}
+
+
 
 
 .sticky{
@@ -126,11 +123,13 @@ header {
 
 .bars-svg{
   margin: 0;
-  padding: 0px;
-  width: 20rem;
-  margin-top: 1rem;
-  margin-bottom: 8px;
-  height: auto;
+  padding: 30px;
+  padding-bottom: 0;
+  padding-top: 0;
+  width: auto;
+  margin-top: calc(.3 * var(--scale));
+  margin-bottom: calc(.2 * var(--scale));
+  height: calc(1.9 * var(--scale));
   display: flex;
 
 
