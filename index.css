@@ -8,7 +8,14 @@
 
 * {
   box-sizing: border-box;
+  
 }
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
 
 body {
   margin: 0;
@@ -16,40 +23,143 @@ body {
   background: var(--bg-main);
   color: var(--text-main);
   line-height: 1.6;
+  justify-content: center;
+  align-items: center;
+  display: block;
 }
 
 header {
-  background: #ffffff;
-  padding-top: 1rem;
-  justify-content: center;
+  width: 100%;
   margin: 0;
   padding: 0;
+  background: var(--bg-main);
+  justify-items: center;
+  align-content: center;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 1;
+    transform: translateY(0x);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-100px);
+  }
+}
+
+
+.title{
+  margin: 0;
+  padding:0;
   top: 0;
+  margin-top: 0rem;
+  text-align: center;
+  position: relative;
+  z-index: -1;
+
+  animation-name: fadeInUp;
+  animation-duration: auto;
+  animation-timeline: view(0 700px);
+  animation-range: entry 0% exit 100%;
+
+
+}
+
+.line{
+  width: 74%;
+  position: relative;
+  justify-content: center;
+  z-index: -1;
+  animation-name: fadeInUp;
+  animation-duration: auto;
+  animation-timeline: view(0 665px);
+  animation-range: entry 0% exit 100%;
+
+
+}
+
+.sublogo{
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+  width: 20rem;
+  line-height: 1;
+}
+
+.subtitle{
+  padding:0;
+  margin: 0;
+  text-align: center;
+  position: relative;
+  z-index: -1;
+  margin-top: .5rem;
+
+  animation-name: fadeInUp;
+  animation-duration: auto;
+  animation-timeline: view(0 660px);
+  animation-range: entry 0% exit 100%;
+}
+
+
+.sticky{
   position: sticky;
-  display: flex;
+  width: 100%;
+  margin: 0;
+  top: 0;
+  justify-content: center;
+  display: inline-block;
+  min-width: 0;
+}
+
+.hero-image{
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  max-height: 30vw;
+  margin-bottom: 5rem;
+  z-index: -2;
+  filter: blur(2px);
+}
+
+.image{
+  position: relative;
+  object-fit: cover;
+  /* max-height: 30vh; */
+  max-width: 100%;
+  margin: 1.5rem auto 0;
+  z-index: -2;
+  border-radius: 10%;
 }
 
 .top-container {
-  background-color: #f1f1f1;
-  padding: 30px;
+  /* background-color: var(--text-muted); */
+  /* background: linear-gradient(180deg, darkgray, transparent 40%); */
+  padding: 8vh;
   text-align: center;
 }
 
-.svg{
+
+.bars-svg{
+  margin: 0;
   padding: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  height: 100%;
-  width: 100%;
+  width: 20rem;
+  margin-top: 1rem;
+  margin-bottom: 8px;
+  height: auto;
+  display: flex;
+
+
 }
 
-.logo {
-  padding-top: 0px;
-  width: 20rem;
-  height: auto;
-  display: block;
-
-  
+.bars {
+  padding: 0;
+  margin: 0px;
+  width: 100%;
+  margin-top: 0rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 section {
@@ -60,10 +170,11 @@ section {
 
 .intro {
   text-align: center;
+  padding-bottom: 6vh;
 }
 
 .intro p {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   color: var(--text-muted);
   max-width: 600px;
   margin: 1.5rem auto 0;
@@ -123,4 +234,18 @@ footer {
   color: var(--text-muted);
 }
 
-    
+
+.caveat-brush-regular {
+  font-family: "Caveat Brush", cursive;
+  font-weight: 100;
+  font-style: normal;
+}
+
+
+.source-code-pro {
+  font-family: "Source Code Pro ", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 7pt;
+}
