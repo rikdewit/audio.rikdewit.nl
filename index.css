@@ -37,17 +37,6 @@ header {
   align-content: center;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 1;
-    transform: translateY(0x);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(-100px);
-  }
-}
-
 
 .title{
   margin: 0;
@@ -58,13 +47,8 @@ header {
   position: relative;
   z-index: -1;
 
-  animation-name: fadeInUp;
-  animation-duration: auto;
-  animation-timeline: view(0 700px);
-  animation-range: entry 0% exit 100%;
-
-
 }
+
 
 .line{
   width: 74%;
@@ -72,7 +56,7 @@ header {
   justify-content: center;
   z-index: -1;
   animation-name: fadeInUp;
-  animation-duration: auto;
+  animation-duration: 1s;
   animation-timeline: view(0 665px);
   animation-range: entry 0% exit 100%;
 
