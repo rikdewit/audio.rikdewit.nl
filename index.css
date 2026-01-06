@@ -3,7 +3,8 @@
   --bg-section: #ffffff;
   --text-main: #111;
   --text-muted: #555;
-  --accent: #0ea5e9;
+  --text-hover: #51c0e4;
+  --accent: #3fc2ff;
   --scale: clamp(2.5em, 4vw, 3.5em);
   --text-scale: clamp(2.5em, 4.3vw, 4em);
 }
@@ -27,12 +28,40 @@ body {
 }
 
 header {
-  width: 100%;
+  /* width: 100%;
   margin: 0;
   padding: 0;
-  background: var(--bg-main);
-  justify-items: center;
-  align-content: center;
+  background: var(--bg-main); */
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 15vw;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  font-size: calc(.4rem + calc(.2*var(--scale)));
+
+}
+
+.left-block{
+  display: flex;
+  justify-content: space-between;
+  gap: calc(.7*var(--scale));
+}
+
+header h3:hover{
+  color: var(--text-hover);
+  transform: scale(1.1);
+  transition: .1s ease-in-out;
+  cursor: pointer;
+}
+
+.right-block{
+  display: flex;
+  justify-content:space-between;
+  gap: calc(.7*var(--scale));
+
 }
 
 
@@ -86,11 +115,18 @@ header {
 .sticky{
   position: sticky;
   width: 100%;
+  height: auto;
   margin: 0;
   top: 0;
   justify-content: center;
   display: inline-block;
   min-width: 0;
+  padding: calc(.4 * var(--scale));
+  padding-bottom: 0;
+  background: var(--bg-main);
+  justify-items: center;
+  align-content: center;
+
 }
 
 .hero-image{
@@ -121,13 +157,13 @@ header {
 }
 
 
+
 .bars-svg{
   margin: 0;
   padding: 30px;
   padding-bottom: 0;
   padding-top: 0;
   width: auto;
-  margin-top: calc(.3 * var(--scale));
   margin-bottom: calc(.2 * var(--scale));
   height: calc(1.9 * var(--scale));
   display: flex;
@@ -135,14 +171,29 @@ header {
 
 }
 
+
+
 .bars {
+  /* position: absolute; */
   padding: 0;
   margin: 0px;
   width: 100%;
-  margin-top: 0rem;
+  height: auto;
+  top: 0px;
+
   display: flex;
   justify-content: center;
-  align-items: center;
+
+  transform-origin: top;
+  transform: scale(1);
+  transition: transform .3s ease-in-out;
+}
+
+.headersmall{
+  transform: scale(.5);
+  transform-origin: top;
+
+  transition: transform .3s ease-in-out;
 }
 
 section {

@@ -10,12 +10,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const titleElement = document.querySelector('.title');
     const subtitleElement = document.querySelector('.subtitle');
     const lineElement = document.querySelector('.line'); 
-    const triggerElement = document.querySelector('.bars'); // Trigger element for the title
-
+    const triggerElement = document.querySelector('.sticky'); // Trigger element for the title
+    const bars = document.querySelector('.bars');
+    
 
     const textAnimation = (element, trigger, moveMax) => {
         const rect = triggerElement.getBoundingClientRect();
-        const windowTop = window.innerHeight;
 
         if (rect.top < trigger) {
             const animationProgress = 1 - (rect.top / trigger);
@@ -26,6 +26,19 @@ document.addEventListener("DOMContentLoaded", function () {
             element.style.transform = `translateY(0px)`;
         }
     };
+    const logoResize = () => {
+        const scrollpos = window.scrollY;
+        const rect = triggerElement.getBoundingClientRect();
+
+        if (rect.top <= 1) {
+            // console.log(rect.top)
+
+            bars.classList.add("headersmall");
+        }else{
+      bars.classList.remove("headersmall");
+            
+        }
+    }
 
     function updatePositions() {
         textAnimation(titleElement, 110, 100); // Title parameters
@@ -35,7 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initial check
     updatePositions();
+    logoResize();
     
     // Add scroll event listener
     window.addEventListener('scroll', updatePositions);
+    window.addEventListener('scroll', logoResize);
 });
