@@ -14,6 +14,9 @@
   
 }
 
+html{
+  overflow: auto;
+}
 
 
 body {
@@ -25,6 +28,10 @@ body {
   justify-content: center;
   align-items: center;
   display: block;
+  overflow: auto;
+  position: relative;
+  height: 100%;
+
 }
 
 header {
@@ -126,6 +133,7 @@ header h3:hover{
   background: var(--bg-main);
   justify-items: center;
   align-content: center;
+  overscroll-behavior: contain;
 
 }
 
@@ -186,14 +194,16 @@ header h3:hover{
 
   transform-origin: top;
   transform: scale(1);
-  transition: transform .3s ease-in-out;
+  transition: transform .2s ease-in-out;
 }
 
 .headersmall{
+  position: fixed;
   transform: scale(.5);
   transform-origin: top;
-
-  transition: transform .3s ease-in-out;
+  padding: calc(.4 * var(--scale));
+  
+  transition: transform .2s ease-in-out;
 }
 
 section {

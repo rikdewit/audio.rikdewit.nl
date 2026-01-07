@@ -14,3 +14,4 @@ ideetjes
 - [] copywriting
 - [] plaatjes op volledige breedte
 - [x] text animation fix
+- []
