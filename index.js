@@ -16,10 +16,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const textAnimation = (element, trigger, moveMax) => {
         const rect = triggerElement.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+                if(windowHeight<500){
+        trigger = -20*(windowHeight/trigger) + trigger
+        console.log(trigger)
+        }
+
+                        if(windowHeight<300){
+        trigger = -22*(windowHeight/trigger) + trigger + 5
+        console.log(trigger)
+        }
 
         if (rect.top < trigger) {
+            
+
+
             const animationProgress = 1 - (rect.top / trigger);
-            const translate = EaseIn(animationProgress) * -1 * moveMax;
+
+        const translate = EaseIn(animationProgress) * -1 * moveMax;
 
             element.style.transform = `translateY(${translate}px)`;
         } else {
@@ -41,9 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updatePositions() {
-        textAnimation(titleElement, 110, 100); // Title parameters
-        textAnimation(lineElement, 105, 110); // Line parameters
-        textAnimation(subtitleElement, 98, 105); // Subtitle parameters
+        textAnimation(titleElement, 125, 120); // Title parameters
+        textAnimation(lineElement, 120, 130); // Line parameters
+        textAnimation(subtitleElement, 113, 125); // Subtitle parameters
     }
 
     // Initial check
@@ -52,5 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // Add scroll event listener
     window.addEventListener('scroll', updatePositions);
+    window.addEventListener('resize', updatePositions);
+
     window.addEventListener('scroll', logoResize);
+    window.addEventListener('resize', logoResize);
+
 });

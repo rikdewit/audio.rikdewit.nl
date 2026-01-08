@@ -76,7 +76,7 @@ header h3:hover{
   margin: 0;
   padding:0;
   top: 0;
-  margin-top: 0rem;
+  margin-top: calc(.25 * var(--scale));
   text-align: center;
   position: relative;
   z-index: -1;
@@ -160,10 +160,13 @@ header h3:hover{
 .top-container {
   /* background-color: var(--text-muted); */
   /* background: linear-gradient(180deg, darkgray, transparent 40%); */
-  padding: 8vh;
+  padding: 10vh;
   text-align: center;
 }
 
+.logo-container{
+  height: calc(2.1 * var(--scale));
+}
 
 
 .bars-svg{
