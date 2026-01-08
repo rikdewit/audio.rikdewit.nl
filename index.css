@@ -7,6 +7,7 @@
   --accent: #3fc2ff;
   --scale: clamp(2.5em, 4vw, 3.5em);
   --text-scale: clamp(2.5em, 4.3vw, 4em);
+  --header-height: 4rem;
 }
 
 * {
@@ -15,7 +16,6 @@
 }
 
 html{
-  overflow: auto;
 }
 
 
@@ -28,7 +28,6 @@ body {
   justify-content: center;
   align-items: center;
   display: block;
-  overflow: auto;
   position: relative;
   height: 100%;
 
@@ -37,8 +36,8 @@ body {
 header {
   /* width: 100%;
   margin: 0;
-  padding: 0;
-  background: var(--bg-main); */
+  padding: 0; */
+  background: var(--bg-main);
   z-index: 2;
   display: flex;
   flex-direction: row;
@@ -48,6 +47,7 @@ header {
   top: 0;
   width: 100%;
   font-size: calc(.4rem + calc(.2*var(--scale)));
+  height: var(--header-height);
 
 }
 
@@ -124,7 +124,7 @@ header h3:hover{
   width: 100%;
   height: auto;
   margin: 0;
-  top: 0;
+  top: var(--header-height);
   justify-content: center;
   display: inline-block;
   min-width: 0;
@@ -133,7 +133,7 @@ header h3:hover{
   background: var(--bg-main);
   justify-items: center;
   align-content: center;
-  overscroll-behavior: contain;
+  /* overscroll-behavior: contain; */
 
 }
 
@@ -158,15 +158,11 @@ header h3:hover{
 }
 
 .top-container {
-  /* background-color: var(--text-muted); */
-  /* background: linear-gradient(180deg, darkgray, transparent 40%); */
   padding: 10vh;
   text-align: center;
 }
 
-.logo-container{
-  height: calc(2.1 * var(--scale));
-}
+
 
 
 .bars-svg{

@@ -62,14 +62,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Initial check
-    updatePositions();
-    logoResize();
+    // updatePositions();
+    // logoResize();
     
     // Add scroll event listener
-    window.addEventListener('scroll', updatePositions);
-    window.addEventListener('resize', updatePositions);
+    // window.addEventListener('scroll', updatePositions);
+    // window.addEventListener('resize', updatePositions);
 
-    window.addEventListener('scroll', logoResize);
-    window.addEventListener('resize', logoResize);
+    // window.addEventListener('scroll', logoResize);
+    // window.addEventListener('resize', logoResize);
 
 });
