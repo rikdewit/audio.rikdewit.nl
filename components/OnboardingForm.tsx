@@ -30,6 +30,7 @@ const OnboardingForm: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [showValidationErrors, setShowValidationErrors] = useState(false);
+  const [serverError, setServerError] = useState(false);
 
   // --- EMAILJS CONFIGURATIE ---
   const EMAILJS_SERVICE_ID = 'service_k3tk1lw'; 
@@ -52,6 +53,7 @@ const OnboardingForm: React.FC = () => {
   }, [currentStep]);
 
   const updateFormData = (key: string, value: any) => {
+    if (key === 'contact-email') setServerError(false);
     setFormData(prev => ({ ...prev, [key]: value }));
   };
 
@@ -63,16 +65,17 @@ const OnboardingForm: React.FC = () => {
   const phoneValue = formData['contact-phone'] || '';
   const nameValue = formData['contact-name'] || '';
 
-  const isEmailInvalid = useMemo(() => showValidationErrors && !validateEmail(emailValue), [showValidationErrors, emailValue]);
-  const isPhoneInvalid = useMemo(() => showValidationErrors && !validatePhone(phoneValue), [showValidationErrors, phoneValue]);
+  const isEmailInvalid = useMemo(() => (showValidationErrors && !validateEmail(emailValue)) || serverError, [showValidationErrors, emailValue, serverError]);
+  const isPhoneInvalid = useMemo(() => showValidationErrors && phoneValue.trim().length > 0 && !validatePhone(phoneValue), [showValidationErrors, phoneValue]);
 
   const isContactStepValid = useMemo(() => {
-    return nameValue.trim().length > 1 && validateEmail(emailValue) && validatePhone(phoneValue);
+    const isPhoneValid = phoneValue.trim() === '' || validatePhone(phoneValue);
+    return nameValue.trim().length > 1 && validateEmail(emailValue) && isPhoneValid;
   }, [nameValue, emailValue, phoneValue]);
 
   const isContactStepFilled = useMemo(() => {
-    return nameValue.trim().length > 1 && emailValue.trim().length > 0 && phoneValue.trim().length > 0;
-  }, [nameValue, emailValue, phoneValue]);
+    return nameValue.trim().length > 1 && emailValue.trim().length > 0;
+  }, [nameValue, emailValue]);
 
   const canGoNext = useMemo(() => {
     switch (currentStep) {
@@ -158,8 +161,6 @@ const OnboardingForm: React.FC = () => {
     const mainService = data['main-service'];
     const items: string[] = [];
     
-    // Alleen relevante keys meenemen op basis van de gekozen hoofd-dienst
-    // Dit voorkomt dat velden uit een eerder geselecteerde (maar later gewijzigde) branch meekomen
     const relevantPrefixes: Record<string, string[]> = {
       'live': ['live-', 'hire-', 'event-', 'has-', 'performers', 'instrument-', 'equip-', 'loc-'],
       'studio': ['studio-'],
@@ -171,20 +172,18 @@ const OnboardingForm: React.FC = () => {
     const prefixes = relevantPrefixes[mainService] || [];
 
     Object.keys(data).forEach(key => {
-      // Sla contact-details en berichten over (deze gaan in aparte velden in de mail)
       const skipKeys = [
         'contact-name', 'contact-org', 'contact-email', 
         'contact-phone', 'contact-location', 'contact-pref', 
         'main-service', 'hire-details', 'event-details', 
         'studio-details', 'nabewerking-details', 
-        'advies-muzikant-details', 'anders-details'
+        'advies-muzikant-details', 'advies-kopen-details', 'anders-details'
       ];
 
       const isRelevant = prefixes.some(p => key.startsWith(p));
 
       if (isRelevant && !skipKeys.includes(key)) {
         const value = data[key];
-        // Formatteer labels voor betere leesbaarheid in de mail
         const label = key.replace(/-/g, ' ').replace('equip ', 'APP: ').replace('instrument ', 'INSTR: ').toUpperCase();
         
         if (typeof value === 'boolean') {
@@ -199,23 +198,33 @@ const OnboardingForm: React.FC = () => {
 
   const handleFinalSubmit = async () => {
     setIsSending(true);
+    setServerError(false);
     try {
       const serviceMap: any = { 'live': 'Live Geluid', 'studio': 'Studio Opname', 'nabewerking': 'Nabewerking', 'advies': 'Advies', 'anders': 'Overig' };
       const projectSummary = formatProjectSummary(formData);
       const customerEmail = formData['contact-email'];
       const customerName = formData['contact-name'];
-      const projectType = serviceMap[formData['main-service']] || formData['main-service'];
+      const mainService = formData['main-service'];
+      const projectType = serviceMap[mainService] || mainService;
       
+      const messageMap: Record<string, string> = {
+        'live': formData['hire-details'] || formData['event-details'],
+        'studio': formData['studio-details'],
+        'nabewerking': formData['nabewerking-details'],
+        'advies': formData['advies-muzikant-details'] || formData['advies-kopen-details'] || formData['anders-details'],
+        'anders': formData['anders-details']
+      };
+
       const baseParams = {
         customer_name: customerName,
         customer_email: customerEmail,
-        customer_phone: formData['contact-phone'],
+        customer_phone: formData['contact-phone'] || 'Niet opgegeven',
         customer_location: formData['contact-location'] || 'Niet opgegeven',
         customer_org: formData['contact-org'] || 'Niet opgegeven',
         contact_preference: formData['contact-pref'],
         project_type: projectType,
         project_summary: projectSummary,
-        customer_message: formData['hire-details'] || formData['event-details'] || formData['studio-details'] || formData['nabewerking-details'] || formData['advies-muzikant-details'] || formData['anders-details'] || 'Geen extra toelichting.',
+        customer_message: messageMap[mainService] || 'Geen extra toelichting.',
         current_year: new Date().getFullYear()
       };
 
@@ -225,6 +234,7 @@ const OnboardingForm: React.FC = () => {
       setCurrentStep('success');
     } catch (error) {
       console.error("EmailJS Error:", error);
+      setServerError(true);
       setIsSending(false);
       setCurrentStep('error');
     }
@@ -326,10 +336,22 @@ const OnboardingForm: React.FC = () => {
         const h = [...stepHistory]; h.pop();
         setStepHistory(h); setCurrentStep(h[h.length - 1]);
         setIsAnimating(false);
-        // Reset validatie view bij teruggaan van contact naar een eerdere stap
-        if (currentStep === 'contact') setShowValidationErrors(false);
+        if (currentStep === 'contact') {
+            // No action needed
+        } else {
+            setShowValidationErrors(false);
+        }
       }, 300);
     }
+  };
+
+  const returnToContact = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentStep('contact');
+      setIsAnimating(false);
+      setShowValidationErrors(true); // Zorg dat de fouten zichtbaar blijven
+    }, 300);
   };
 
   const OptionCard = ({ label, isSelected, onClick, icon: Icon }: any) => (
@@ -379,7 +401,19 @@ const OnboardingForm: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black leading-tight">Wat kan ik voor je <span className="italic">betekenen</span>?</h2>
             <div className="grid gap-2 mb-2 sm:mb-3">
               {[{ id: 'live', label: 'Live geluid voor een evenement' }, { id: 'studio', label: 'Studio opname' }, { id: 'nabewerking', label: 'Audio Nabewerking' }, { id: 'advies', label: 'Audio Advies' }, { id: 'anders', label: 'Anders' }].map(opt => (
-                <OptionCard key={opt.id} label={opt.label} isSelected={formData['main-service'] === opt.id} onClick={() => updateFormData('main-service', opt.id)} />
+                <OptionCard 
+                  key={opt.id} 
+                  label={opt.label} 
+                  isSelected={formData['main-service'] === opt.id} 
+                  onClick={() => {
+                    if (formData['main-service'] !== opt.id) {
+                      setFormData({
+                        'contact-pref': formData['contact-pref'],
+                        'main-service': opt.id
+                      });
+                    }
+                  }} 
+                />
               ))}
             </div>
           </div>
@@ -742,10 +776,14 @@ const OnboardingForm: React.FC = () => {
                     value={emailValue} 
                     onChange={e => updateFormData('contact-email', e.target.value)} 
                   />
-                  {isEmailInvalid && <span className="text-[9px] text-red-500 mono font-bold uppercase tracking-widest mt-1">Ongeldig e-mailadres</span>}
+                  {isEmailInvalid && (
+                    <span className="text-[9px] text-red-500 mono font-bold uppercase tracking-widest mt-1">
+                      {serverError ? 'Ongeldig of niet bestaand e-mailadres' : 'Ongeldig e-mailadres'}
+                    </span>
+                  )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">Telefoon *</label>
+                  <label className="mono text-[10px] uppercase text-gray-500 font-bold tracking-widest">Telefoon</label>
                   <input 
                     type="tel" 
                     className={`border-b py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full transition-colors ${isPhoneInvalid ? 'border-red-500' : 'border-gray-300'}`} 
@@ -777,9 +815,12 @@ const OnboardingForm: React.FC = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-50 mb-2 sm:mb-4 shadow-xl">
               <AlertCircle className="text-red-500 w-8 h-8 sm:w-10 sm:h-10" strokeWidth={1} />
             </div>
-            <h2 className="text-xl sm:text-2xl font-light tracking-tight text-black">Oeps! Er ging iets mis.</h2>
-            <p className="text-gray-500 text-xs sm:text-sm font-light max-w-sm mx-auto leading-relaxed">Versturen mislukt. Mail naar <a href="mailto:audio@rikdewit.nl" className="underline font-medium">audio@rikdewit.nl</a>.</p>
-            <div className="pt-4 sm:pt-6"><NavButton onClick={() => setCurrentStep('contact')}>Opnieuw proberen</NavButton></div>
+            <h2 className="text-xl sm:text-2xl font-light tracking-tight text-black">Versturen mislukt</h2>
+            <p className="text-gray-500 text-xs sm:text-sm font-light max-w-sm mx-auto leading-relaxed">Het lijkt erop dat het e-mailadres niet correct is of de server onbereikbaar is. Controleer je gegevens.</p>
+            <div className="pt-4 sm:pt-6">
+                <NavButton onClick={returnToContact}>Gegevens controleren</NavButton>
+            </div>
+            <p className="text-[10px] text-gray-400 mt-4">Of mail direct naar: <a href="mailto:audio@rikdewit.nl" className="underline">audio@rikdewit.nl</a></p>
           </div>
         );
       case 'success':
@@ -791,7 +832,7 @@ const OnboardingForm: React.FC = () => {
             </div>
             <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-black">Ontvangen!</h2>
             <p className="text-gray-500 text-base sm:text-lg font-light max-w-sm mx-auto leading-relaxed">Bedankt voor de details. Ik kom zo snel mogelijk bij je terug.</p>
-            <div className="pt-4 sm:pt-6"><button onClick={() => { setFormData({'contact-pref': 'email'}); setCurrentStep('main'); setStepHistory(['main']); setShowValidationErrors(false); }} className="text-[10px] font-bold tracking-[0.4em] uppercase underline underline-offset-[8px] text-black hover:text-gray-400 transition-colors">Nieuwe aanvraag</button></div>
+            <div className="pt-4 sm:pt-6"><button onClick={() => { setFormData({'contact-pref': 'email'}); setCurrentStep('main'); setStepHistory(['main']); setShowValidationErrors(false); setServerError(false); }} className="text-[10px] font-bold tracking-[0.4em] uppercase underline underline-offset-[8px] text-black hover:text-gray-400 transition-colors">Nieuwe aanvraag</button></div>
           </div>
         );
       default: return null;
