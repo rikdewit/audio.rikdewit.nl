@@ -1,4 +1,4 @@
-
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { PORTFOLIO } from '../constants';
 
@@ -28,7 +28,7 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
         }
       },
       {
-        threshold: 0.75, 
+        threshold: 0.1, 
         rootMargin: '0px'
       }
     );
@@ -44,8 +44,6 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
     };
   }, []);
 
-  // Gebruik een effect om entranceComplete op true te zetten na de initiële animatie
-  // Dit zorgt ervoor dat de transitionDelay wordt verwijderd voor toekomstige hover acties
   useEffect(() => {
     if (isVisible && useDelay && !entranceComplete) {
       const timer = setTimeout(() => {
@@ -55,7 +53,6 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
     }
   }, [isVisible, useDelay, entranceComplete, index]);
 
-  // Alleen vertraging toepassen tijdens de eerste "in-scroll" animatie
   const staggerDelay = (useDelay && !entranceComplete) ? index * STAGGER_SPEED : 0;
 
   return (
@@ -63,20 +60,17 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
       ref={cardRef}
       className="group relative aspect-[4/5] overflow-hidden bg-gray-100 cursor-pointer rounded-sm shadow-sm hover:shadow-2xl transition-shadow duration-500"
     >
-      {/* Achtergrond afbeelding met hover-zoom */}
       <img 
         src={item.imageUrl} 
         alt={item.title}
         style={{ 
           transitionDelay: isVisible ? `${staggerDelay}ms` : '0ms' 
         }}
-        // De duration is 1200ms voor de entrance, maar op hover maken we hem sneller (500ms) voor betere feedback
         className={`w-full h-full object-cover transition-all duration-[1200ms] group-hover:duration-500 ease-out group-hover:scale-110 ${
           isVisible ? 'grayscale-0 scale-100' : 'grayscale scale-105 opacity-100'
         }`}
       />
       
-      {/* Interactieve overlay: wordt donkerder en schuift iets omhoog bij hover */}
       <div 
         style={{ 
           transitionDelay: isVisible ? `${staggerDelay + 200}ms` : '0ms' 
@@ -97,7 +91,6 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
           }`} 
         />
         
-        {/* 'Bekijk project' indicatie die verschijnt op hover */}
         <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">
            <span className="text-[10px] text-white uppercase tracking-[0.2em] font-bold">Bekijk project</span>
            <div className="w-4 h-[1px] bg-white" />
