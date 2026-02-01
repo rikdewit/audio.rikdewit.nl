@@ -69,6 +69,7 @@ const Hero: React.FC = () => {
               }}
               className="transition-all duration-75 ease-out w-full"
             >
+              <h1 className="sr-only">Rik de Wit Audio - Professionele Geluidstechnicus</h1>
               <LogoText />
             </div>
           </div>
