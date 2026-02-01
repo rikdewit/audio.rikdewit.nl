@@ -3,43 +3,78 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PORTFOLIO } from '../constants';
 
-const PortfolioCard: React.FC<{ item: any; index: number; isParentVisible: boolean }> = ({ item, index, isParentVisible }) => {
-  const [entranceComplete, setEntranceComplete] = useState(false);
-  const STAGGER_SPEED = 150;
-  const ENTRANCE_DURATION = 1200;
+const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isParentVisible && !entranceComplete) {
-      const timer = setTimeout(() => {
-        setEntranceComplete(true);
-      }, (index * STAGGER_SPEED) + ENTRANCE_DURATION);
-      return () => clearTimeout(timer);
-    }
-  }, [isParentVisible, entranceComplete, index]);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        // Hogere drempel zodat de onderkant van de foto (waar de tekst staat) 
+        // waarschijnlijk al in beeld is als de animatie start.
+        threshold: 0.5, 
+        rootMargin: '0px',
+      }
+    );
 
-  const staggerDelay = !entranceComplete ? index * STAGGER_SPEED : 0;
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
+
+  // Bepaal de stagger op basis van de kolom (op desktop 3 kolommen, op tablet 2, op mobiel 1)
+  // We gebruiken CSS variabelen of simpelweg een berekende delay die we in de inline style zetten.
+  const [staggerDelay, setStaggerDelay] = useState(0);
+
+  useEffect(() => {
+    const updateDelay = () => {
+      const width = window.innerWidth;
+      let columns = 1;
+      if (width >= 1024) columns = 3;
+      else if (width >= 768) columns = 2;
+      
+      setStaggerDelay((index % columns) * 150);
+    };
+
+    updateDelay();
+    window.addEventListener('resize', updateDelay);
+    return () => window.removeEventListener('resize', updateDelay);
+  }, [index]);
 
   return (
     <div 
+      ref={cardRef}
       className="group relative aspect-[4/5] overflow-hidden bg-gray-100 cursor-pointer rounded-sm shadow-sm hover:shadow-2xl transition-shadow duration-500"
     >
       <img 
         src={item.imageUrl} 
         alt={item.title}
         style={{ 
-          transitionDelay: isParentVisible ? `${staggerDelay}ms` : '0ms' 
+          transitionDelay: isVisible ? `${staggerDelay}ms` : '0ms' 
         }}
-        className={`w-full h-full object-cover transition-all duration-[1200ms] group-hover:duration-500 ease-out group-hover:scale-110 ${
-          isParentVisible ? 'grayscale-0 scale-100' : 'grayscale scale-105 opacity-0'
+        className={`w-full h-full object-cover transition-all duration-[1500ms] ease-out group-hover:duration-500 group-hover:scale-110 ${
+          isVisible ? 'grayscale-0 scale-100' : 'grayscale scale-105'
         }`}
       />
       
       <div 
         style={{ 
-          transitionDelay: isParentVisible ? `${staggerDelay + 200}ms` : '0ms' 
+          transitionDelay: isVisible ? `${staggerDelay + 200}ms` : '0ms' 
         }}
-        className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent flex flex-col justify-end p-10 transition-all duration-[800ms] ease-out group-hover:from-black ${
-          isParentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent flex flex-col justify-end p-10 transition-all duration-1000 ease-out group-hover:from-black ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}
       >
         <span className="text-white/60 text-[10px] uppercase tracking-[0.4em] mb-3 transform transition-transform duration-500 group-hover:-translate-y-1">{item.category}</span>
@@ -47,11 +82,11 @@ const PortfolioCard: React.FC<{ item: any; index: number; isParentVisible: boole
         
         <div 
           style={{ 
-            transitionDelay: isParentVisible ? `${staggerDelay + 500}ms` : '0ms' 
+            transitionDelay: isVisible ? `${staggerDelay + 500}ms` : '0ms' 
           }}
-          className={`h-[1px] bg-white/30 mt-4 transition-all duration-[1000ms] ease-out group-hover:bg-white/60 group-hover:scale-x-105 origin-left ${
-            isParentVisible ? 'w-full' : 'w-0'
-          }`} 
+          className={`h-[1px] bg-white/30 mt-4 transition-all duration-[1200ms] ease-out group-hover:bg-white/60 group-hover:scale-x-105 origin-left ${
+            isVisible ? 'w-full' : 'w-0'
+          }`}
         />
         
         <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-2">
@@ -64,37 +99,10 @@ const PortfolioCard: React.FC<{ item: any; index: number; isParentVisible: boole
 };
 
 const Portfolio: React.FC = () => {
-  const [sectionVisible, setSectionVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setSectionVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.15,
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
   return (
-    <section id="portfolio" ref={sectionRef} className="min-h-screen flex items-center py-24 px-6 bg-white">
+    <section id="portfolio" className="min-h-screen flex items-center py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto w-full">
-        <div className={`mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8 transition-all duration-1000 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="max-w-xl">
             <h2 className="text-sm uppercase tracking-[0.4em] font-bold text-gray-400 mb-4">Portfolio</h2>
             <h3 className="text-5xl font-light tracking-tight leading-none mb-6">Gerealiseerde projecten</h3>
@@ -107,7 +115,7 @@ const Portfolio: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {PORTFOLIO.map((item, index) => (
-            <PortfolioCard key={item.id} item={item} index={index} isParentVisible={sectionVisible} />
+            <PortfolioCard key={item.id} item={item} index={index} />
           ))}
         </div>
       </div>
