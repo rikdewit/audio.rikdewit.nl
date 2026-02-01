@@ -1,5 +1,6 @@
+
 'use client';
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { Send, CheckCircle2, ArrowRight, ArrowLeft, Check, Mail, Phone, MessageSquare, Loader2, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
@@ -37,6 +38,16 @@ const OnboardingForm: React.FC = () => {
   const EMAILJS_TEMPLATE_ID = 'template_r6rg82d'; 
   const EMAILJS_PUBLIC_KEY = 'lDC9vj_pKNBf2ZzyG'; 
   const MIJN_EMAIL = 'audio@rikdewit.nl';
+
+  // --- Phone Preference Sync ---
+  // Reset contact-pref to email if phone is removed and a phone-based pref was selected
+  useEffect(() => {
+    const phone = formData['contact-phone'] || '';
+    const pref = formData['contact-pref'];
+    if (phone.trim() === '' && (pref === 'telefoon' || pref === 'whatsapp')) {
+      setFormData(prev => ({ ...prev, 'contact-pref': 'email' }));
+    }
+  }, [formData['contact-phone'], formData['contact-pref']]);
 
   const progress = useMemo(() => {
     if (currentStep === 'success') return 100;
@@ -748,6 +759,7 @@ const OnboardingForm: React.FC = () => {
           </div>
         );
       case 'contact':
+        const hasPhoneValue = (formData['contact-phone'] || '').trim().length > 0;
         return (
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">Contactgegevens</h2>
@@ -795,12 +807,19 @@ const OnboardingForm: React.FC = () => {
                 <input type="text" className="border-b border-gray-300 py-2 text-base sm:text-lg focus:border-black outline-none font-light bg-transparent text-black w-full" placeholder="Stad of regio" value={formData['contact-location'] || ''} onChange={e => updateFormData('contact-location', e.target.value)} />
               </div>
               <div className="flex flex-col gap-2 sm:gap-3 mt-1 sm:mt-2"><label className="mono text-[10px] uppercase text-gray-400 font-bold tracking-widest">Voorkeur</label>
-                <div className="grid grid-cols-3 gap-2 sm:gap-3">{[{ id: 'email', label: 'Mail', icon: Mail }, { id: 'telefoon', label: 'Bel', icon: Phone }, { id: 'whatsapp', label: 'App', icon: MessageSquare }].map(opt => (
-                    <div key={opt.id} onClick={() => updateFormData('contact-pref', opt.id)} className={`relative overflow-hidden flex flex-col items-center justify-center p-2 sm:p-3 border cursor-pointer transition-all rounded-sm gap-1 group ${formData['contact-pref'] === opt.id ? 'border-black bg-white shadow-md' : 'border-gray-100 bg-white hover:border-gray-300'}`}>
-                      <div className={`absolute inset-0 bg-gradient-to-r from-[#87E8A0]/10 to-[#71E2E4]/10 transition-all duration-500 ease-out ${formData['contact-pref'] === opt.id ? 'w-full' : 'w-0 group-hover:w-full'}`} />
-                      <div className="relative z-10 flex flex-col items-center gap-1 sm:gap-1.5"><opt.icon size={14} className={formData['contact-pref'] === opt.id ? 'text-black' : 'text-gray-400'} /><span className={`mono text-[8px] uppercase tracking-widest font-bold ${formData['contact-pref'] === opt.id ? 'text-black' : 'text-gray-500'}`}>{opt.label}</span></div>
-                    </div>
-                  ))}</div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3">{[{ id: 'email', label: 'Mail', icon: Mail, requiresPhone: false }, { id: 'telefoon', label: 'Bel', icon: Phone, requiresPhone: true }, { id: 'whatsapp', label: 'App', icon: MessageSquare, requiresPhone: true }].map(opt => {
+                    const isDisabled = opt.requiresPhone && !hasPhoneValue;
+                    return (
+                      <div 
+                        key={opt.id} 
+                        onClick={() => !isDisabled && updateFormData('contact-pref', opt.id)} 
+                        className={`relative overflow-hidden flex flex-col items-center justify-center p-2 sm:p-3 border transition-all rounded-sm gap-1 group ${isDisabled ? 'bg-gray-100 border-gray-100 cursor-not-allowed opacity-50' : 'cursor-pointer'} ${!isDisabled && formData['contact-pref'] === opt.id ? 'border-black bg-white shadow-md' : 'border-gray-100 bg-white hover:border-gray-300'}`}
+                      >
+                        {!isDisabled && <div className={`absolute inset-0 bg-gradient-to-r from-[#87E8A0]/10 to-[#71E2E4]/10 transition-all duration-500 ease-out ${formData['contact-pref'] === opt.id ? 'w-full' : 'w-0 group-hover:w-full'}`} />}
+                        <div className="relative z-10 flex flex-col items-center gap-1 sm:gap-1.5"><opt.icon size={14} className={!isDisabled && formData['contact-pref'] === opt.id ? 'text-black' : 'text-gray-400'} /><span className={`mono text-[8px] uppercase tracking-widest font-bold ${!isDisabled && formData['contact-pref'] === opt.id ? 'text-black' : 'text-gray-500'}`}>{opt.label}</span></div>
+                      </div>
+                    );
+                  })}</div>
               </div>
             </div>
           </div>
