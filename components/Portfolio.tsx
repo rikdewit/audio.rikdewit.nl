@@ -1,82 +1,45 @@
+
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { PORTFOLIO } from '../constants';
 
-const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [useDelay, setUseDelay] = useState(true);
+const PortfolioCard: React.FC<{ item: any; index: number; isParentVisible: boolean }> = ({ item, index, isParentVisible }) => {
   const [entranceComplete, setEntranceComplete] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
   const STAGGER_SPEED = 150;
   const ENTRANCE_DURATION = 1200;
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          const rect = entry.boundingClientRect;
-          const isPastTrigger = rect.top < 0; 
-          
-          if (isPastTrigger) {
-            setUseDelay(false);
-            setEntranceComplete(true);
-          }
-          
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.1, 
-        rootMargin: '0px'
-      }
-    );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => {
-      if (cardRef.current) {
-        observer.unobserve(cardRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isVisible && useDelay && !entranceComplete) {
+    if (isParentVisible && !entranceComplete) {
       const timer = setTimeout(() => {
         setEntranceComplete(true);
       }, (index * STAGGER_SPEED) + ENTRANCE_DURATION);
       return () => clearTimeout(timer);
     }
-  }, [isVisible, useDelay, entranceComplete, index]);
+  }, [isParentVisible, entranceComplete, index]);
 
-  const staggerDelay = (useDelay && !entranceComplete) ? index * STAGGER_SPEED : 0;
+  const staggerDelay = !entranceComplete ? index * STAGGER_SPEED : 0;
 
   return (
     <div 
-      ref={cardRef}
       className="group relative aspect-[4/5] overflow-hidden bg-gray-100 cursor-pointer rounded-sm shadow-sm hover:shadow-2xl transition-shadow duration-500"
     >
       <img 
         src={item.imageUrl} 
         alt={item.title}
         style={{ 
-          transitionDelay: isVisible ? `${staggerDelay}ms` : '0ms' 
+          transitionDelay: isParentVisible ? `${staggerDelay}ms` : '0ms' 
         }}
         className={`w-full h-full object-cover transition-all duration-[1200ms] group-hover:duration-500 ease-out group-hover:scale-110 ${
-          isVisible ? 'grayscale-0 scale-100' : 'grayscale scale-105 opacity-100'
+          isParentVisible ? 'grayscale-0 scale-100' : 'grayscale scale-105 opacity-0'
         }`}
       />
       
       <div 
         style={{ 
-          transitionDelay: isVisible ? `${staggerDelay + 200}ms` : '0ms' 
+          transitionDelay: isParentVisible ? `${staggerDelay + 200}ms` : '0ms' 
         }}
         className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent flex flex-col justify-end p-10 transition-all duration-[800ms] ease-out group-hover:from-black ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          isParentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
       >
         <span className="text-white/60 text-[10px] uppercase tracking-[0.4em] mb-3 transform transition-transform duration-500 group-hover:-translate-y-1">{item.category}</span>
@@ -84,10 +47,10 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
         
         <div 
           style={{ 
-            transitionDelay: isVisible ? `${staggerDelay + 500}ms` : '0ms' 
+            transitionDelay: isParentVisible ? `${staggerDelay + 500}ms` : '0ms' 
           }}
           className={`h-[1px] bg-white/30 mt-4 transition-all duration-[1000ms] ease-out group-hover:bg-white/60 group-hover:scale-x-105 origin-left ${
-            isVisible ? 'w-full' : 'w-0'
+            isParentVisible ? 'w-full' : 'w-0'
           }`} 
         />
         
@@ -101,10 +64,37 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
 };
 
 const Portfolio: React.FC = () => {
+  const [sectionVisible, setSectionVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSectionVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section id="portfolio" className="min-h-screen flex items-center py-24 px-6 bg-white">
+    <section id="portfolio" ref={sectionRef} className="min-h-screen flex items-center py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto w-full">
-        <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className={`mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8 transition-all duration-1000 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="max-w-xl">
             <h2 className="text-sm uppercase tracking-[0.4em] font-bold text-gray-400 mb-4">Portfolio</h2>
             <h3 className="text-5xl font-light tracking-tight leading-none mb-6">Gerealiseerde projecten</h3>
@@ -117,7 +107,7 @@ const Portfolio: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {PORTFOLIO.map((item, index) => (
-            <PortfolioCard key={item.id} item={item} index={index} />
+            <PortfolioCard key={item.id} item={item} index={index} isParentVisible={sectionVisible} />
           ))}
         </div>
       </div>
