@@ -1,4 +1,4 @@
-
+'use client';
 import React from 'react';
 import { Mic2, Speaker, Settings } from 'lucide-react';
 import { SERVICES } from '../constants';
