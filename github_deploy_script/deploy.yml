@@ -24,28 +24,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
       - name: Install dependencies
         run: npm install
       - name: Build
         run: npm run build
-      - name: Copy static assets to dist
+      - name: Static Assets Fix
         run: |
-          # Zorg dat het domein behouden blijft
-          if [ -f "CNAME" ]; then cp CNAME dist/; fi
-          # Kopieer Favicon map vanuit de root naar de dist folder
-          if [ -d "Favicon" ]; then cp -r Favicon dist/; fi
-          # Kopieer Rik.jpeg vanuit de root naar de dist folder
-          if [ -f "Rik.jpeg" ]; then cp Rik.jpeg dist/; fi
-          # Kopieer overige losse favicon bestanden
-          cp *.png dist/ 2>/dev/null || true
-          cp *.ico dist/ 2>/dev/null || true
-          cp *.svg dist/ 2>/dev/null || true
+          # Next.js export zet alles in 'out'. 
+          # Als je bestanden NIET in de /public map hebt staan maar in de root, 
+          # copieert dit script ze alsnog handmatig naar de out map voor de zekerheid.
+          if [ -f "CNAME" ]; then cp CNAME out/; fi
+          if [ -f "Rik.jpeg" ]; then cp Rik.jpeg out/; fi
+          if [ -d "Favicon" ]; then cp -r Favicon out/; fi
+          # Fix voor GitHub Pages die folders met underscores negeert (zoals _next)
+          touch out/.nojekyll
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './out'
 
   deploy:
     environment:

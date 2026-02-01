@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   description: "Freelance audio technicus gespecialiseerd in live mixing, evenementen en technische ondersteuning. Gevestigd in Eindhoven & Utrecht. Passie voor perfect geluid.",
   keywords: ["Rik de Wit", "Audio Technicus", "Live Mixing", "Geluidstechnicus Utrecht", "Geluidstechnicus Eindhoven", "Freelance Audio"],
   authors: [{ name: "Rik de Wit" }],
+  icons: {
+    icon: [
+      { url: "/Favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/Favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/Favicon/apple-touch-icon.png",
+  },
+  manifest: "/Favicon/site.webmanifest",
   openGraph: {
     title: "Rik de Wit Audio | Professionele Geluidstechnicus",
     description: "Freelance audio technicus voor live mixing en evenementen. Kwaliteit en precisie voor elk project.",
