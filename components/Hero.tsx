@@ -27,6 +27,9 @@ const Hero: React.FC = () => {
   const bgOffset1 = activeScroll * 0.01;
   const bgOffset2 = activeScroll * 0.02;
 
+  // Trigger visualizer greeting animation when user is at the top
+  const isAtTop = scrollY < 20;
+
   return (
     <section className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden bg-white">
       <div className="absolute inset-0 pointer-events-none opacity-[0.025]">
@@ -47,7 +50,10 @@ const Hero: React.FC = () => {
             style={{ transform: `translateY(${graphicOffset}px)` }}
           >
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200%] h-[1000px] bg-white -translate-y-full pointer-events-none" />
-            <LogoGraphic className="w-full max-w-[220px] sm:max-w-[300px] md:max-w-[380px] mx-auto transition-all duration-500" />
+            <LogoGraphic 
+              animate={isAtTop}
+              className="w-full max-w-[220px] sm:max-w-[300px] md:max-w-[380px] mx-auto transition-all duration-500" 
+            />
           </div>
           
           <div className="relative z-10 w-full flex justify-center mt-[-2px]">
