@@ -24,21 +24,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          # Cache is verwijderd om 'Dependencies lock file is not found' error te voorkomen
       - name: Install dependencies
         run: npm install
       - name: Build
         run: npm run build
       - name: Static Assets Fix
         run: |
-          # Next.js export zet alles in 'out'. 
-          # Als je bestanden NIET in de /public map hebt staan maar in de root, 
-          # copieert dit script ze alsnog handmatig naar de out map voor de zekerheid.
-          if [ -f "CNAME" ]; then cp CNAME out/; fi
-          if [ -f "Rik.jpeg" ]; then cp Rik.jpeg out/; fi
-          if [ -d "Favicon" ]; then cp -r Favicon out/; fi
-          # Fix voor GitHub Pages die folders met underscores negeert (zoals _next)
+          # Next.js export zet alles in de 'out' map.
+          # We maken een .nojekyll bestand aan zodat GitHub Pages de mappen die met een underscore beginnen (zoals _next) niet negeert.
           touch out/.nojekyll
+          # Optioneel: Kopieer bestanden die specifiek nodig zijn in de root van de site
+          if [ -f "CNAME" ]; then cp CNAME out/; fi
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
