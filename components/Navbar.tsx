@@ -1,4 +1,4 @@
-
+'use client';
 import React, { useState, useEffect } from 'react';
 import { LogoGraphic, LogoText } from '../constants';
 

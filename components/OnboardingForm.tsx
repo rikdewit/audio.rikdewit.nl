@@ -1,4 +1,4 @@
-
+'use client';
 import React, { useState, useCallback, useMemo } from 'react';
 import { Send, CheckCircle2, ArrowRight, ArrowLeft, Check, Mail, Phone, MessageSquare, Loader2, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
@@ -60,7 +60,6 @@ const OnboardingForm: React.FC = () => {
   const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePhone = (phone: string) => /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{7,15}$/.test(phone);
 
-  // Validatie helpers voor UI
   const emailValue = formData['contact-email'] || '';
   const phoneValue = formData['contact-phone'] || '';
   const nameValue = formData['contact-name'] || '';
@@ -268,7 +267,6 @@ const OnboardingForm: React.FC = () => {
     if (step === 'live-practical') return 'contact';
     if (step === 'live-hire-practical') return 'contact';
     
-    // Studio Flow
     if (step === 'studio-type') {
       const t = formData['studio-type'];
       if (t === 'Band / Instrumenten') return 'studio-recording-method';
@@ -282,7 +280,6 @@ const OnboardingForm: React.FC = () => {
     if (step === 'nabewerking-type') return 'nabewerking-details';
     if (step === 'nabewerking-details') return 'contact';
     
-    // Advies Flow
     if (step === 'advies-who') {
       const who = formData['advies-who'];
       if (who === 'Muzikant / Band') return 'advies-muzikant-details';
@@ -337,7 +334,6 @@ const OnboardingForm: React.FC = () => {
         setStepHistory(h); setCurrentStep(h[h.length - 1]);
         setIsAnimating(false);
         if (currentStep === 'contact') {
-            // No action needed
         } else {
             setShowValidationErrors(false);
         }
@@ -350,7 +346,7 @@ const OnboardingForm: React.FC = () => {
     setTimeout(() => {
       setCurrentStep('contact');
       setIsAnimating(false);
-      setShowValidationErrors(true); // Zorg dat de fouten zichtbaar blijven
+      setShowValidationErrors(true);
     }, 300);
   };
 
