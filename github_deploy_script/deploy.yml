@@ -24,18 +24,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # Cache is verwijderd om 'Dependencies lock file is not found' error te voorkomen
       - name: Install dependencies
         run: npm install
       - name: Build
         run: npm run build
       - name: Static Assets Fix
         run: |
-          # Next.js export zet alles in de 'out' map.
-          # We maken een .nojekyll bestand aan zodat GitHub Pages de mappen die met een underscore beginnen (zoals _next) niet negeert.
+          # Next.js 'output: export' zet alles in de 'out' map.
+          # We maken een .nojekyll bestand aan zodat GitHub Pages mappen met een underscore (zoals _next) niet negeert.
           touch out/.nojekyll
-          # Optioneel: Kopieer bestanden die specifiek nodig zijn in de root van de site
-          if [ -f "CNAME" ]; then cp CNAME out/; fi
+          # Zorg dat het domein behouden blijft door CNAME naar 'out' te kopiëren
+          if [ -f "CNAME" ]; then 
+            cp CNAME out/
+          else
+            echo "audio.rikdewit.nl" > out/CNAME
+          fi
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
