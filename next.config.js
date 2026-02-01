@@ -4,8 +4,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Indien je op een subpad host (bijv. gebruikersnaam.github.io/repo-naam/), 
-  // voeg dan basePath toe. Voor audio.rikdewit.nl (custom domein) is '/' correct.
+  // GitHub Pages often works better with trailing slashes for directory-style URLs
+  trailingSlash: true,
+  // Ensure the base path is empty for custom domains
   basePath: '',
 };
 
