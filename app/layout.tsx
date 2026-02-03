@@ -126,6 +126,7 @@ export default function RootLayout({
       </head>
       <body className="bg-white text-black antialiased">
         {children}
+        <script data-goatcounter="https://rikdewit-audio.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
       </body>
     </html>
   );
