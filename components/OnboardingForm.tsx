@@ -1,6 +1,6 @@
 
 'use client';
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { Send, CheckCircle2, ArrowRight, ArrowLeft, Check, Mail, Phone, MessageSquare, Loader2, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
@@ -33,11 +33,35 @@ const OnboardingForm: React.FC = () => {
   const [showValidationErrors, setShowValidationErrors] = useState(false);
   const [serverError, setServerError] = useState(false);
 
+  // Animation state for the main menu options
+  const [introPlayed, setIntroPlayed] = useState(false);
+  const formContainerRef = useRef<HTMLDivElement>(null);
+
   // --- EMAILJS CONFIGURATIE ---
   const EMAILJS_SERVICE_ID = 'service_k3tk1lw'; 
   const EMAILJS_TEMPLATE_ID = 'template_r6rg82d'; 
   const EMAILJS_PUBLIC_KEY = 'lDC9vj_pKNBf2ZzyG'; 
   const MIJN_EMAIL = 'audio@rikdewit.nl';
+
+  // --- Observer for intro animation ---
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !introPlayed) {
+          setIntroPlayed(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (formContainerRef.current) {
+      observer.observe(formContainerRef.current);
+    }
+
+    return () => {
+      if (formContainerRef.current) observer.unobserve(formContainerRef.current);
+    };
+  }, [introPlayed]);
 
   // --- Phone Preference Sync ---
   // Reset contact-pref to email if phone is removed and a phone-based pref was selected
@@ -361,9 +385,16 @@ const OnboardingForm: React.FC = () => {
     }, 300);
   };
 
-  const OptionCard = ({ label, isSelected, onClick, icon: Icon }: any) => (
+  const OptionCard = ({ label, isSelected, onClick, icon: Icon, animateIntro = false, index = 0 }: any) => (
     <div onClick={onClick} className={`relative overflow-hidden p-3 sm:p-4 border cursor-pointer transition-all duration-300 rounded-sm group w-full ${isSelected ? 'border-black bg-white shadow-lg sm:translate-x-2' : 'border-gray-100 bg-white hover:border-gray-300'}`}>
-      <div className={`absolute inset-0 bg-gradient-to-r from-[#87E8A0]/10 to-[#71E2E4]/10 transition-all duration-500 ease-out ${isSelected ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+      {/* Reverted to horizontal gradient (to-r) and width animation (w-0 to w-full) */}
+      <div 
+        className={`absolute top-0 left-0 h-full bg-gradient-to-r from-[#87E8A0]/10 to-[#71E2E4]/10 transition-all duration-500 ease-out 
+          ${isSelected ? 'w-full' : 'w-0 group-hover:w-full'} 
+          ${(animateIntro && !isSelected) ? 'animate-scan' : ''}
+        `}
+        style={(animateIntro && !isSelected) ? { animationDelay: `${400 + (index * 200)}ms` } : {}}
+      />
       <div className="relative z-10 flex items-center justify-between">
         <div className="flex items-center gap-4 sm:gap-5">
           <div className={`w-6 h-6 sm:w-7 sm:h-7 shrink-0 rounded-full border flex items-center justify-center transition-all ${isSelected ? 'bg-black border-black text-white' : 'border-gray-200 text-gray-400 group-hover:border-black group-hover:text-black'}`}>
@@ -380,7 +411,7 @@ const OnboardingForm: React.FC = () => {
       onClick={!disabled ? onToggle : undefined} 
       className={`relative overflow-hidden p-3 sm:p-4 border transition-all duration-300 rounded-sm group w-full ${disabled ? 'bg-gray-100 border-gray-100 cursor-not-allowed opacity-50' : 'cursor-pointer'} ${!disabled && isSelected ? 'border-black bg-white shadow-md' : 'border-gray-100 bg-white hover:border-gray-300'}`}
     >
-      {!disabled && <div className={`absolute inset-0 bg-gradient-to-r from-[#87E8A0]/5 to-[#71E2E4]/5 transition-all duration-500 ease-out ${isSelected ? 'w-full' : 'w-0 group-hover:w-full'}`} />}
+      {!disabled && <div className={`absolute top-0 left-0 h-full bg-gradient-to-r from-[#87E8A0]/5 to-[#71E2E4]/5 transition-all duration-500 ease-out ${isSelected ? 'w-full' : 'w-0 group-hover:w-full'}`} />}
       <div className="relative z-10 flex items-center gap-3 sm:gap-4">
         <div className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 border flex items-center justify-center transition-all duration-300 ${!disabled && isSelected ? 'bg-black border-black scale-110' : 'border-gray-300 bg-white group-hover:border-gray-400'}`}>
           {isSelected && <Check size={10} className="text-white" />}
@@ -407,11 +438,13 @@ const OnboardingForm: React.FC = () => {
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black leading-tight">Wat kan ik voor je <span className="italic">betekenen</span>?</h2>
             <div className="grid gap-2 mb-2 sm:mb-3">
-              {[{ id: 'live', label: 'Live geluid voor een evenement' }, { id: 'studio', label: 'Studio opname' }, { id: 'nabewerking', label: 'Audio Nabewerking' }, { id: 'advies', label: 'Audio Advies' }, { id: 'anders', label: 'Anders' }].map(opt => (
+              {[{ id: 'live', label: 'Live geluid voor een evenement' }, { id: 'studio', label: 'Studio opname' }, { id: 'nabewerking', label: 'Audio Nabewerking' }, { id: 'advies', label: 'Audio Advies' }, { id: 'anders', label: 'Anders' }].map((opt, index) => (
                 <OptionCard 
                   key={opt.id} 
                   label={opt.label} 
                   isSelected={formData['main-service'] === opt.id} 
+                  index={index}
+                  animateIntro={introPlayed}
                   onClick={() => {
                     if (formData['main-service'] !== opt.id) {
                       setFormData({
@@ -857,7 +890,7 @@ const OnboardingForm: React.FC = () => {
   const isNavigationVisible = currentStep !== 'success' && currentStep !== 'error';
 
   return (
-    <section id="diensten" className="min-h-screen flex items-center py-12 sm:py-20 md:py-24 px-4 sm:px-6 bg-white overflow-hidden border-y border-gray-50">
+    <section id="diensten" ref={formContainerRef} className="min-h-screen flex items-center py-12 sm:py-20 md:py-24 px-4 sm:px-6 bg-white overflow-hidden border-y border-gray-50">
       <div className="max-w-7xl mx-auto w-full">
         <div className="grid lg:grid-cols-5 gap-10 lg:gap-20 items-start relative">
           
@@ -931,6 +964,16 @@ const OnboardingForm: React.FC = () => {
       </div>
       <style>{`
         @keyframes gradient-shift { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+        
+        @keyframes scan-horizontal {
+          0% { width: 0%; opacity: 0.5; }
+          50% { width: 100%; opacity: 1; }
+          100% { width: 0%; opacity: 0.5; }
+        }
+        .animate-scan {
+          animation: scan-horizontal 2s ease-in-out;
+        }
+
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
