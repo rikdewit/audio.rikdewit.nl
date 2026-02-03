@@ -22,6 +22,60 @@ interface FormData {
   [key: string]: any;
 }
 
+// --- Helper Components Moved Outside ---
+
+const OptionCard = ({ label, isSelected, onClick, icon: Icon, shouldAnimate = false, index = 0 }: any) => (
+  <div onClick={onClick} className={`relative overflow-hidden p-3 sm:p-4 border cursor-pointer transition-all duration-300 rounded-sm group w-full ${isSelected ? 'border-black bg-white shadow-lg sm:translate-x-2' : 'border-gray-100 bg-white hover:border-gray-300'}`}>
+    {/* 
+        Animation & Hover Logic:
+        - Animation runs if 'shouldAnimate' is true.
+        - 'group-hover:!w-full' and 'group-hover:!opacity-100' FORCE the hover state 
+          using !important (Tailwind's ! prefix) to override the running CSS animation.
+          This prevents the animation from restarting when unhovering, as the class isn't removed.
+    */}
+    <div 
+      className={`absolute top-0 left-0 h-full bg-gradient-to-r from-[#87E8A0]/10 to-[#71E2E4]/10 transition-all duration-500 ease-out 
+        ${isSelected ? 'w-full' : 'w-0 group-hover:!w-full group-hover:!opacity-100'} 
+        ${(shouldAnimate && !isSelected) ? 'animate-scan' : ''}
+      `}
+      style={(shouldAnimate && !isSelected) ? { animationDelay: `${400 + (index * 200)}ms` } : {}}
+    />
+    <div className="relative z-10 flex items-center justify-between">
+      <div className="flex items-center gap-4 sm:gap-5">
+        <div className={`w-6 h-6 sm:w-7 sm:h-7 shrink-0 rounded-full border flex items-center justify-center transition-all ${isSelected ? 'bg-black border-black text-white' : 'border-gray-200 text-gray-400 group-hover:border-black group-hover:text-black'}`}>
+          {Icon ? <Icon size={12} /> : <Check size={12} className={isSelected ? 'opacity-100' : 'opacity-0'} />}
+        </div>
+        <span className={`mono text-[10px] sm:text-xs uppercase tracking-widest font-bold ${isSelected ? 'text-black' : 'text-gray-500 group-hover:text-black'}`}>{label}</span>
+      </div>
+    </div>
+  </div>
+);
+
+const CheckboxCard = ({ label, isSelected, onToggle, disabled = false }: any) => (
+  <div 
+    onClick={!disabled ? onToggle : undefined} 
+    className={`relative overflow-hidden p-3 sm:p-4 border transition-all duration-300 rounded-sm group w-full ${disabled ? 'bg-gray-100 border-gray-100 cursor-not-allowed opacity-50' : 'cursor-pointer'} ${!disabled && isSelected ? 'border-black bg-white shadow-md' : 'border-gray-100 bg-white hover:border-gray-300'}`}
+  >
+    {!disabled && <div className={`absolute top-0 left-0 h-full bg-gradient-to-r from-[#87E8A0]/5 to-[#71E2E4]/5 transition-all duration-500 ease-out ${isSelected ? 'w-full' : 'w-0 group-hover:w-full'}`} />}
+    <div className="relative z-10 flex items-center gap-3 sm:gap-4">
+      <div className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 border flex items-center justify-center transition-all duration-300 ${!disabled && isSelected ? 'bg-black border-black scale-110' : 'border-gray-300 bg-white group-hover:border-gray-400'}`}>
+        {isSelected && <Check size={10} className="text-white" />}
+      </div>
+      <span className={`mono text-[9px] sm:text-[10px] uppercase tracking-widest font-bold transition-colors ${!disabled && isSelected ? 'text-black' : 'text-gray-500 group-hover:text-black'}`}>{label}</span>
+    </div>
+  </div>
+);
+
+const NavButton = ({ onClick, disabled, variant = 'primary', children, isLoading = false }: any) => (
+  <button 
+    onClick={onClick} 
+    disabled={disabled || isLoading} 
+    className={`px-4 sm:px-8 py-3 sm:py-4 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.4em] transition-all flex items-center justify-center gap-2 sm:gap-3 rounded-sm relative overflow-hidden flex-1 sm:flex-none ${variant === 'primary' ? 'bg-black text-white hover:bg-black/90 shadow-lg disabled:bg-gray-200 disabled:text-gray-400' : 'border border-gray-300 text-gray-500 hover:border-black hover:text-black bg-white'}`}
+  >
+    {isLoading ? <Loader2 size={14} className="animate-spin" /> : <>{variant === 'secondary' && <ArrowLeft size={14} />}{children}{variant === 'primary' && <ArrowRight size={14} />}</>}
+  </button>
+);
+
 const OnboardingForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<StepId>('main');
   const [formData, setFormData] = useState<FormData>({
@@ -35,6 +89,7 @@ const OnboardingForm: React.FC = () => {
 
   // Animation state for the main menu options
   const [introPlayed, setIntroPlayed] = useState(false);
+  const [animationFinished, setAnimationFinished] = useState(false);
   const formContainerRef = useRef<HTMLDivElement>(null);
 
   // --- EMAILJS CONFIGURATIE ---
@@ -47,8 +102,14 @@ const OnboardingForm: React.FC = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // Trigger only once when intersecting
         if (entry.isIntersecting && !introPlayed) {
           setIntroPlayed(true);
+          // Clean up animation classes after they finish (delay + duration + buffer)
+          // Max delay 1200ms + duration 1200ms = 2400ms
+          setTimeout(() => {
+            setAnimationFinished(true);
+          }, 2500);
         }
       },
       { threshold: 0.3 }
@@ -385,52 +446,6 @@ const OnboardingForm: React.FC = () => {
     }, 300);
   };
 
-  const OptionCard = ({ label, isSelected, onClick, icon: Icon, animateIntro = false, index = 0 }: any) => (
-    <div onClick={onClick} className={`relative overflow-hidden p-3 sm:p-4 border cursor-pointer transition-all duration-300 rounded-sm group w-full ${isSelected ? 'border-black bg-white shadow-lg sm:translate-x-2' : 'border-gray-100 bg-white hover:border-gray-300'}`}>
-      {/* Reverted to horizontal gradient (to-r) and width animation (w-0 to w-full) */}
-      <div 
-        className={`absolute top-0 left-0 h-full bg-gradient-to-r from-[#87E8A0]/10 to-[#71E2E4]/10 transition-all duration-500 ease-out 
-          ${isSelected ? 'w-full' : 'w-0 group-hover:w-full'} 
-          ${(animateIntro && !isSelected) ? 'animate-scan' : ''}
-        `}
-        style={(animateIntro && !isSelected) ? { animationDelay: `${400 + (index * 200)}ms` } : {}}
-      />
-      <div className="relative z-10 flex items-center justify-between">
-        <div className="flex items-center gap-4 sm:gap-5">
-          <div className={`w-6 h-6 sm:w-7 sm:h-7 shrink-0 rounded-full border flex items-center justify-center transition-all ${isSelected ? 'bg-black border-black text-white' : 'border-gray-200 text-gray-400 group-hover:border-black group-hover:text-black'}`}>
-            {Icon ? <Icon size={12} /> : <Check size={12} className={isSelected ? 'opacity-100' : 'opacity-0'} />}
-          </div>
-          <span className={`mono text-[10px] sm:text-xs uppercase tracking-widest font-bold ${isSelected ? 'text-black' : 'text-gray-500 group-hover:text-black'}`}>{label}</span>
-        </div>
-      </div>
-    </div>
-  );
-
-  const CheckboxCard = ({ label, isSelected, onToggle, disabled = false }: any) => (
-    <div 
-      onClick={!disabled ? onToggle : undefined} 
-      className={`relative overflow-hidden p-3 sm:p-4 border transition-all duration-300 rounded-sm group w-full ${disabled ? 'bg-gray-100 border-gray-100 cursor-not-allowed opacity-50' : 'cursor-pointer'} ${!disabled && isSelected ? 'border-black bg-white shadow-md' : 'border-gray-100 bg-white hover:border-gray-300'}`}
-    >
-      {!disabled && <div className={`absolute top-0 left-0 h-full bg-gradient-to-r from-[#87E8A0]/5 to-[#71E2E4]/5 transition-all duration-500 ease-out ${isSelected ? 'w-full' : 'w-0 group-hover:w-full'}`} />}
-      <div className="relative z-10 flex items-center gap-3 sm:gap-4">
-        <div className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 border flex items-center justify-center transition-all duration-300 ${!disabled && isSelected ? 'bg-black border-black scale-110' : 'border-gray-300 bg-white group-hover:border-gray-400'}`}>
-          {isSelected && <Check size={10} className="text-white" />}
-        </div>
-        <span className={`mono text-[9px] sm:text-[10px] uppercase tracking-widest font-bold transition-colors ${!disabled && isSelected ? 'text-black' : 'text-gray-500 group-hover:text-black'}`}>{label}</span>
-      </div>
-    </div>
-  );
-
-  const NavButton = ({ onClick, disabled, variant = 'primary', children, isLoading = false }: any) => (
-    <button 
-      onClick={onClick} 
-      disabled={disabled || isLoading} 
-      className={`px-4 sm:px-8 py-3 sm:py-4 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.4em] transition-all flex items-center justify-center gap-2 sm:gap-3 rounded-sm relative overflow-hidden flex-1 sm:flex-none ${variant === 'primary' ? 'bg-black text-white hover:bg-black/90 shadow-lg disabled:bg-gray-200 disabled:text-gray-400' : 'border border-gray-300 text-gray-500 hover:border-black hover:text-black bg-white'}`}
-    >
-      {isLoading ? <Loader2 size={14} className="animate-spin" /> : <>{variant === 'secondary' && <ArrowLeft size={14} />}{children}{variant === 'primary' && <ArrowRight size={14} />}</>}
-    </button>
-  );
-
   const renderStepContent = () => {
     switch (currentStep) {
       case 'main':
@@ -444,7 +459,7 @@ const OnboardingForm: React.FC = () => {
                   label={opt.label} 
                   isSelected={formData['main-service'] === opt.id} 
                   index={index}
-                  animateIntro={introPlayed}
+                  shouldAnimate={introPlayed && !animationFinished}
                   onClick={() => {
                     if (formData['main-service'] !== opt.id) {
                       setFormData({
@@ -971,7 +986,7 @@ const OnboardingForm: React.FC = () => {
           100% { width: 0%; opacity: 0.5; }
         }
         .animate-scan {
-          animation: scan-horizontal 2s ease-in-out;
+          animation: scan-horizontal 1.2s ease-in-out;
         }
 
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
