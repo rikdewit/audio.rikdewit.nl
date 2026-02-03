@@ -98,6 +98,17 @@ const OnboardingForm: React.FC = () => {
   const EMAILJS_PUBLIC_KEY = 'lDC9vj_pKNBf2ZzyG'; 
   const MIJN_EMAIL = 'audio@rikdewit.nl';
 
+  // --- Reset Listener ---
+  useEffect(() => {
+    const handleReset = () => {
+      setIntroPlayed(false);
+      setAnimationFinished(false);
+    };
+
+    window.addEventListener('trigger-services-animation', handleReset);
+    return () => window.removeEventListener('trigger-services-animation', handleReset);
+  }, []);
+
   // --- Observer for intro animation ---
   useEffect(() => {
     const observer = new IntersectionObserver(

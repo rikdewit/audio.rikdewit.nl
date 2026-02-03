@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useState, useEffect } from 'react';
 import { LogoGraphic, LogoText } from '../constants';
@@ -43,6 +44,11 @@ const Navbar: React.FC = () => {
             <a 
               key={link.name}
               href={link.href}
+              onClick={() => {
+                if (link.href === '#diensten') {
+                    window.dispatchEvent(new Event('trigger-services-animation'));
+                }
+              }}
               className="text-xs font-bold tracking-[0.2em] uppercase hover:text-gray-400 transition-colors"
             >
               {link.name}

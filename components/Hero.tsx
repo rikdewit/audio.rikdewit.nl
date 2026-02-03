@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useState, useEffect } from 'react';
 import { LogoGraphic, LogoText } from '../constants';
@@ -87,6 +88,9 @@ const Hero: React.FC = () => {
             <a 
               href="#diensten" 
               className="group flex flex-col items-center cursor-pointer"
+              onClick={() => {
+                 window.dispatchEvent(new Event('trigger-services-animation'));
+              }}
             >
               {/* Double Button Structure */}
               <div className="relative">
