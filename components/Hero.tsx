@@ -86,10 +86,23 @@ const Hero: React.FC = () => {
           <div className="mt-12 sm:mt-16">
             <a 
               href="#diensten" 
-              className="group flex flex-col items-center text-xs tracking-[0.4em] uppercase font-bold text-black"
+              className="group flex flex-col items-center cursor-pointer"
             >
-              Werk met mij samen
-              <div className="mt-6 w-[1px] h-12 sm:h-16 bg-black/30 group-hover:h-24 group-hover:bg-black transition-all duration-700" />
+              {/* Double Button Structure */}
+              <div className="relative">
+                {/* The 'Fake Shadow' Layer */}
+                <div className="absolute top-1.5 left-0 w-full h-full rounded-full bg-black" />
+                
+                {/* The Top Button Layer */}
+                <div className="relative z-10 bg-white border border-black rounded-full px-10 sm:px-12 py-3 sm:py-4 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-1.5 group-active:translate-y-1.5 group-active:bg-black">
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-black group-active:text-white transition-colors duration-300">
+                    Werk met mij samen
+                  </span>
+                </div>
+              </div>
+
+              {/* Connecting Line */}
+              <div className="mt-8 w-[1px] h-12 sm:h-16 bg-black/10 group-hover:h-24 group-hover:bg-black/30 transition-all duration-700" />
             </a>
           </div>
         </div>
