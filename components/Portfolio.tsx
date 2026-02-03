@@ -5,6 +5,7 @@ import { PORTFOLIO } from '../constants';
 
 const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,7 +36,6 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
   }, []);
 
   // Bepaal de stagger op basis van de kolom (op desktop 3 kolommen, op tablet 2, op mobiel 1)
-  // We gebruiken CSS variabelen of simpelweg een berekende delay die we in de inline style zetten.
   const [staggerDelay, setStaggerDelay] = useState(0);
 
   useEffect(() => {
@@ -53,6 +53,19 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
     return () => window.removeEventListener('resize', updateDelay);
   }, [index]);
 
+  // Wacht tot de introductie-animatie klaar is en verwijder dan de delay
+  useEffect(() => {
+    if (isVisible) {
+      // Maximaal ~1500ms (img duration) + stagger. We nemen ruim 2000ms + stagger
+      // om zeker te zijn dat alles klaar is voordat we de delay weghalen.
+      const timeout = setTimeout(() => {
+        setIsAnimationComplete(true);
+      }, staggerDelay + 2000);
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [isVisible, staggerDelay]);
+
   return (
     <div 
       ref={cardRef}
@@ -62,7 +75,7 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
         src={item.imageUrl} 
         alt={item.title}
         style={{ 
-          transitionDelay: isVisible ? `${staggerDelay}ms` : '0ms' 
+          transitionDelay: (isVisible && !isAnimationComplete) ? `${staggerDelay}ms` : '0ms' 
         }}
         className={`w-full h-full object-cover transition-all duration-[1500ms] ease-out group-hover:duration-500 group-hover:scale-110 ${
           isVisible ? 'grayscale-0 scale-100' : 'grayscale scale-105'
@@ -71,7 +84,7 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
       
       <div 
         style={{ 
-          transitionDelay: isVisible ? `${staggerDelay + 200}ms` : '0ms' 
+          transitionDelay: (isVisible && !isAnimationComplete) ? `${staggerDelay + 200}ms` : '0ms' 
         }}
         className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent flex flex-col justify-end p-10 transition-all duration-1000 ease-out group-hover:from-black ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -82,7 +95,7 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
         
         <div 
           style={{ 
-            transitionDelay: isVisible ? `${staggerDelay + 500}ms` : '0ms' 
+            transitionDelay: (isVisible && !isAnimationComplete) ? `${staggerDelay + 500}ms` : '0ms' 
           }}
           className={`h-[1px] bg-white/30 mt-4 transition-all duration-[1200ms] ease-out group-hover:bg-white/60 group-hover:scale-x-105 origin-left ${
             isVisible ? 'w-full' : 'w-0'
