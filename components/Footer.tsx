@@ -16,8 +16,8 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="flex gap-8 text-[10px] uppercase tracking-widest font-bold text-gray-500">
-          <a href="#" className="hover:text-black transition-colors">Privacy</a>
-          <a href="#" className="hover:text-black transition-colors">Algemene Voorwaarden</a>
+          <a href="/privacy" className="hover:text-black transition-colors">Privacy</a>
+          <a href="/terms" className="hover:text-black transition-colors">Algemene Voorwaarden</a>
         </div>
       </div>
     </footer>

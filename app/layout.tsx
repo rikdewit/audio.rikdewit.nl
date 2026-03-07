@@ -116,10 +116,41 @@ export default function RootLayout({
                     "name": "Netherlands"
                 }
               ],
+              "openingHours": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                  "opens": "09:00",
+                  "closes": "18:00"
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Saturday", "Sunday"],
+                  "opens": "10:00",
+                  "closes": "16:00"
+                }
+              ],
               "sameAs": [
                 "https://www.instagram.com/rikdewit.audio"
               ],
-              "description": "Professionele audio-oplossingen voor live evenementen, mixing en technisch advies door Rik de Wit."
+              "description": "Professionele audio-oplossingen voor live evenementen, mixing en technisch advies door Rik de Wit.",
+              "hasOfferingDescription": [
+                {
+                  "@type": "Service",
+                  "name": "Live Audio Mixing",
+                  "description": "Professionele live mixing services voor evenementen, concerten en productionen."
+                },
+                {
+                  "@type": "Service",
+                  "name": "Technische Geluidsverzorging",
+                  "description": "Complete technische ondersteuning van geluidssystemen voor alle soorten evenementen."
+                },
+                {
+                  "@type": "Service",
+                  "name": "Audio Consultancy",
+                  "description": "Advies en consultatie op het gebied van professionele audiotechniek."
+                }
+              ]
             }),
           }}
         />
