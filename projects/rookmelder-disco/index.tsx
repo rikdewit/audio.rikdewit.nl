@@ -103,38 +103,36 @@ export default function RookmelderDiscoProject() {
             Het verhaal
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Story Text */}
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-              <p>
-                Rookmelder Disco is meer dan een band—het is een experiment, een samenwerking en een
-                platform voor elektronische en experimentele pop. Als bandleider en producer heb ik het
-                genoegen om deze groep te leiden en samen met talentvolle muzikanten aan deze unieke
-                geluidswereld te bouwen.
-              </p>
-              <p>
-                Met veel aandacht voor details en een voorkeur voor het onconventionele, creëren we
-                nummers die zowel experimenteel als toegankelijk zijn. Elk optreden is een gelegenheid
-                om onze visie op elektronische muziek met het publiek te delen.
-              </p>
-              <p>
-                De combinatie van gitaar, synths en elektronische productiemiddelen vormt het hart van
-                onze aanpak. We geloven in het verkennen van grenzen en het creëren van iets nieuws.
-              </p>
-            </div>
-
-            {/* Story Image */}
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-gray-100">
-              <Image
-                src={rookmelderDiscoMeta.images.story[0]}
-                alt="Rookmelder Disco live performance"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
+          {/* Story Text */}
+          <div className="space-y-6 text-lg text-gray-700 leading-relaxed max-w-3xl">
+            <p>
+              Rookmelder Disco is meer dan een band—het is een experiment, een samenwerking en een
+              platform voor elektronische en experimentele pop. Als bandleider en producer heb ik het
+              genoegen om deze groep te leiden en samen met talentvolle muzikanten aan deze unieke
+              geluidswereld te bouwen.
+            </p>
+            <p>
+              Met veel aandacht voor details en een voorkeur voor het onconventionele, creëren we
+              nummers die zowel experimenteel als toegankelijk zijn. Elk optreden is een gelegenheid
+              om onze visie op elektronische muziek met het publiek te delen.
+            </p>
+            <p>
+              De combinatie van gitaar, synths en elektronische productiemiddelen vormt het hart van
+              onze aanpak. We geloven in het verkennen van grenzen en het creëren van iets nieuws.
+            </p>
           </div>
         </div>
+      </section>
+
+      {/* Full-width Live Image Section */}
+      <section className="w-full h-[500px] md:h-[600px] overflow-hidden bg-gray-100">
+        <Image
+          src={rookmelderDiscoMeta.images.story[0]}
+          alt="Rookmelder Disco live performance - band and audience"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
       </section>
 
       {/* Roles & Tasks Section */}
