@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import ProjectNavbar from '../../components/ProjectNavbar';
 
 // Metadata object with all project data
 export const rookmelderDiscoMeta = {
@@ -35,16 +36,10 @@ export default function RookmelderDiscoProject() {
 
   return (
     <div className="relative min-h-screen bg-white">
-      {/* Back Button */}
-      <div className="fixed top-8 left-8 z-50">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-3 px-6 py-3 text-sm font-bold tracking-[0.2em] uppercase text-white bg-black/40 backdrop-blur-md rounded-full hover:bg-black/60 transition-colors duration-200 drop-shadow-lg"
-        >
-          <span className="text-lg">←</span>
-          <span>Terug</span>
-        </Link>
-      </div>
+      <ProjectNavbar
+        projectTitle={rookmelderDiscoMeta.title}
+        darkBackground={true}
+      />
 
       {/* Full-width Live Performance Banner */}
       <section className="relative w-full" style={{ aspectRatio: '16 / 6' }}>

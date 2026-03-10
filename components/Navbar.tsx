@@ -3,7 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { LogoGraphic, LogoText } from '../constants';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  darkBackground?: boolean;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ darkBackground = false }) => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -15,7 +19,9 @@ const Navbar: React.FC = () => {
   }, []);
 
   const isScrolled = scrollY > 50;
-  const showSmallLogoGraphic = scrollY > 320; 
+  const showSmallLogoGraphic = scrollY > 320;
+  const linkColor = isScrolled ? 'text-black' : darkBackground ? 'text-white' : 'text-black';
+  const linkHoverColor = isScrolled ? 'hover:text-gray-400' : darkBackground ? 'hover:text-gray-300' : 'hover:text-gray-400'; 
 
   const navLinks = [
     { name: 'Diensten', href: '#diensten' },
@@ -35,13 +41,13 @@ const Navbar: React.FC = () => {
             <LogoGraphic className="w-full" />
           </div>
           <div className={`transition-all duration-500 ${showSmallLogoGraphic ? '-ml-1 md:-ml-2' : 'ml-0'}`}>
-            <LogoText size="sm" />
+            <LogoText size="sm" color={isScrolled ? 'black' : darkBackground ? 'white' : 'black'} compact={showSmallLogoGraphic} />
           </div>
         </a>
         
         <div className="hidden md:flex space-x-12 items-center">
           {navLinks.map((link) => (
-            <a 
+            <a
               key={link.name}
               href={link.href}
               onClick={() => {
@@ -49,7 +55,7 @@ const Navbar: React.FC = () => {
                     window.dispatchEvent(new Event('trigger-services-animation'));
                 }
               }}
-              className="text-xs font-bold tracking-[0.2em] uppercase hover:text-gray-400 transition-colors"
+              className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${linkColor} ${linkHoverColor}`}
             >
               {link.name}
             </a>
