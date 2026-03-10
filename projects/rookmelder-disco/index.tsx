@@ -56,7 +56,7 @@ export default function RookmelderDiscoProject() {
 
         {/* Title Overlay */}
         <div className="absolute inset-0 flex items-center justify-center px-6">
-          <h1 className="text-6xl md:text-8xl font-light tracking-tight text-white text-center leading-none drop-shadow-xl">
+          <h1 className="text-4xl md:text-8xl font-light tracking-tight text-white text-center leading-none drop-shadow-xl" style={{ fontSize: 'clamp(2rem, 6vw, 6.5rem)' }}>
             {rookmelderDiscoMeta.title}
           </h1>
         </div>

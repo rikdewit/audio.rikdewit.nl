@@ -35,8 +35,9 @@ const ProjectNavbar: React.FC<ProjectNavbarProps> = ({
 
   const isScrolled = scrollY > 50;
   const showSmallLogoGraphic = scrollY > 320;
-  const linkColor = isScrolled ? 'text-black' : darkBackground ? 'text-white' : 'text-black';
-  const linkHoverColor = isScrolled ? 'hover:text-gray-400' : darkBackground ? 'hover:text-gray-300' : 'hover:text-gray-400';
+  const linkColor = isScrolled ? 'text-black' : 'text-white';
+  const linkHoverColor = isScrolled ? 'hover:text-gray-400' : 'hover:text-gray-300';
+  const disabledLinkColor = isScrolled ? 'text-black' : 'text-white';
 
   return (
     <nav
@@ -50,7 +51,7 @@ const ProjectNavbar: React.FC<ProjectNavbarProps> = ({
           <div className={`transition-all duration-500 origin-left overflow-hidden ${showSmallLogoGraphic ? 'w-24 md:w-32 opacity-100 scale-[0.85]' : 'w-0 opacity-0 scale-50'}`}>
             <LogoGraphic className="w-full" />
           </div>
-          <div className={`transition-all duration-500 ${showSmallLogoGraphic ? '-ml-1 md:-ml-2' : 'ml-0'}`}>
+          <div className={`transition-all duration-500 ${showSmallLogoGraphic ? '-ml-1 md:-ml-2' : 'ml-0'} ${showSmallLogoGraphic ? 'hidden md:block' : ''}`}>
             <LogoText size="sm" color={isScrolled ? 'black' : darkBackground ? 'white' : 'black'} compact={showSmallLogoGraphic} />
           </div>
         </Link>
@@ -78,7 +79,7 @@ const ProjectNavbar: React.FC<ProjectNavbarProps> = ({
                 <span className="md:hidden">←</span>
               </Link>
             ) : (
-              <span className={`text-xs font-bold tracking-[0.2em] uppercase opacity-30 ${linkColor}`}>
+              <span className={`text-xs font-bold tracking-[0.2em] uppercase ${disabledLinkColor}`}>
                 <span className="hidden md:inline">← Vorige</span>
                 <span className="md:hidden">←</span>
               </span>
@@ -94,7 +95,7 @@ const ProjectNavbar: React.FC<ProjectNavbarProps> = ({
                 <span className="md:hidden">→</span>
               </Link>
             ) : (
-              <span className={`text-xs font-bold tracking-[0.2em] uppercase opacity-30 ${linkColor}`}>
+              <span className={`text-xs font-bold tracking-[0.2em] uppercase ${disabledLinkColor}`}>
                 <span className="hidden md:inline">Volgende →</span>
                 <span className="md:hidden">→</span>
               </span>
