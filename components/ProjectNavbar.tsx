@@ -75,13 +75,13 @@ const ProjectNavbar: React.FC<ProjectNavbarProps> = ({
                 className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${linkColor} ${linkHoverColor}`}
                 title={`Vorig project: ${previousProject.title}`}
               >
-                <span className="hidden md:inline">← Vorige</span>
-                <span className="md:hidden">←</span>
+                <span className="hidden lg:inline">← Vorige</span>
+                <span className="lg:hidden">←</span>
               </Link>
             ) : (
               <span className={`text-xs font-bold tracking-[0.2em] uppercase ${disabledLinkColor}`}>
-                <span className="hidden md:inline">← Vorige</span>
-                <span className="md:hidden">←</span>
+                <span className="hidden lg:inline">← Vorige</span>
+                <span className="lg:hidden">←</span>
               </span>
             )}
 
@@ -91,13 +91,13 @@ const ProjectNavbar: React.FC<ProjectNavbarProps> = ({
                 className={`text-xs font-bold tracking-[0.2em] uppercase transition-colors ${linkColor} ${linkHoverColor}`}
                 title={`Volgende project: ${nextProject.title}`}
               >
-                <span className="hidden md:inline">Volgende →</span>
-                <span className="md:hidden">→</span>
+                <span className="hidden lg:inline">Volgende →</span>
+                <span className="lg:hidden">→</span>
               </Link>
             ) : (
               <span className={`text-xs font-bold tracking-[0.2em] uppercase ${disabledLinkColor}`}>
-                <span className="hidden md:inline">Volgende →</span>
-                <span className="md:hidden">→</span>
+                <span className="hidden lg:inline">Volgende →</span>
+                <span className="lg:hidden">→</span>
               </span>
             )}
           </div>
