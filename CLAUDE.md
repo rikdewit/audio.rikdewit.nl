@@ -14,6 +14,12 @@
 - ❌ Markdown content files (content.md)
 - ❌ Shared types file
 
+## Git Management
+- ✅ Commit source code, components, configuration
+- ❌ NEVER commit build artifacts (`out/`, `.next/`)
+- ❌ NEVER commit generated files (build output, static exports)
+- These go in `.gitignore`
+
 ## Workflow
 - **Don't commit code** until explicitly asked
 - Always **check CLAUDE.md first** before making architectural decisions
