@@ -32,10 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const meta = projectMetaMap[params.slug];
 
   if (!meta) {
-    return {
-      title: 'Project niet gevonden | Rik de Wit Audio',
-      description: 'Het aangevraagde project kon niet worden gevonden.',
-    };
+    notFound();
   }
 
   return {
