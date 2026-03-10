@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://audio.rikdewit.nl</loc>
+<lastmod>2026-03-10T17:08:17.433Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://audio.rikdewit.nl/privacy</loc>
+<lastmod>2026-03-10T17:08:17.434Z</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.5</priority>
+</url>
+<url>
+<loc>https://audio.rikdewit.nl/terms</loc>
+<lastmod>2026-03-10T17:08:17.434Z</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.5</priority>
+</url>
+</urlset>

@@ -152,7 +152,11 @@ export default function RookmelderDiscoProject() {
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex gap-3">
                       <span className="text-black font-light">—</span>
-                      <span>Leadgitaar en synthesizer-gitaar arrangementenArrangement en compositie van gitaardelen</span>
+                      <span>Leadgitaar en synthesizer-gitaar arrangement</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-black font-light">—</span>
+                      <span>Compositie en arrangement van gitaarpartijen</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-black font-light">—</span>
