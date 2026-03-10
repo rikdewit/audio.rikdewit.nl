@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -153,7 +152,7 @@ export default function RookmelderDiscoProject() {
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex gap-3">
                       <span className="text-black font-light">—</span>
-                      <span>Leadgitaar en synthesizer-gitaar arrangementenArrangement en compositie van guitaardelen</span>
+                      <span>Leadgitaar en synthesizer-gitaar arrangementenArrangement en compositie van gitaardelen</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-black font-light">—</span>
@@ -257,6 +256,7 @@ export default function RookmelderDiscoProject() {
               allowFullScreen
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
+              sandbox="allow-autoplay allow-same-origin allow-scripts"
               className="max-w-2xl"
             />
           </div>
