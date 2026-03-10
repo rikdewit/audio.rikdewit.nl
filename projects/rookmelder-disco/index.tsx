@@ -42,7 +42,7 @@ export default function RookmelderDiscoProject() {
       />
 
       {/* Full-width Live Performance Banner */}
-      <section className="relative w-full" style={{ aspectRatio: '16 / 6' }}>
+      <section className="relative w-full aspect-video md:aspect-[16/6]">
         <Image
           src={rookmelderDiscoMeta.images.live}
           alt="Rookmelder Disco live performance banner"
