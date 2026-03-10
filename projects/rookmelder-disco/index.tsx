@@ -2,27 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-
-// Metadata object with all project data
-export const rookmelderDiscoMeta = {
-  id: 1,
-  slug: 'rookmelder-disco',
-  title: 'Rookmelder Disco',
-  category: 'Artiest / Band',
-  role: ['Gitarist', 'Producer', 'Bandleider'],
-  year: '2023–heden',
-  description: 'Bandleider en producer van Rookmelder Disco, een elektronische popband met experimentele elementen.',
-  thumbnail: '/projects/rookmelder-disco/images/04-band.jpg',
-  images: {
-    guitar: '/projects/rookmelder-disco/images/01-guitar.jpg',
-    performance: '/projects/rookmelder-disco/images/03-performance.jpg',
-    live: '/projects/rookmelder-disco/images/02-live.jpg',
-  },
-  links: {
-    spotify: 'https://open.spotify.com/artist/6XOiN2K0StRf35xUTbzjuk?si=Iu5fDMacQ0KMQGUL9nvS5Q',
-    instagram: 'https://instagram.com/rookmelder.disco',
-  },
-};
+import ProjectNavbar from '../../components/ProjectNavbar';
+import { rookmelderDiscoMeta } from './meta';
 
 // Extract artist ID from Spotify URL for embed
 const extractSpotifyArtistId = (spotifyUrl: string): string => {
@@ -35,19 +16,13 @@ export default function RookmelderDiscoProject() {
 
   return (
     <div className="relative min-h-screen bg-white">
-      {/* Back Button */}
-      <div className="fixed top-8 left-8 z-50">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-3 px-6 py-3 text-sm font-bold tracking-[0.2em] uppercase text-white bg-black/40 backdrop-blur-md rounded-full hover:bg-black/60 transition-colors duration-200 drop-shadow-lg"
-        >
-          <span className="text-lg">←</span>
-          <span>Terug</span>
-        </Link>
-      </div>
+      <ProjectNavbar
+        projectTitle={rookmelderDiscoMeta.title}
+        darkBackground={true}
+      />
 
       {/* Full-width Live Performance Banner */}
-      <section className="relative w-full" style={{ aspectRatio: '16 / 6' }}>
+      <section className="relative w-full aspect-video md:aspect-[16/6]">
         <Image
           src={rookmelderDiscoMeta.images.live}
           alt="Rookmelder Disco live performance banner"
@@ -61,7 +36,7 @@ export default function RookmelderDiscoProject() {
 
         {/* Title Overlay */}
         <div className="absolute inset-0 flex items-center justify-center px-6">
-          <h1 className="text-6xl md:text-8xl font-light tracking-tight text-white text-center leading-none drop-shadow-xl">
+          <h1 className="text-4xl md:text-8xl font-light tracking-tight text-white text-center leading-none drop-shadow-xl" style={{ fontSize: 'clamp(2rem, 6vw, 6.5rem)' }}>
             {rookmelderDiscoMeta.title}
           </h1>
         </div>

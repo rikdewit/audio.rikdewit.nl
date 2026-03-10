@@ -113,14 +113,19 @@ export const LogoGraphic: React.FC<{ className?: string; animate?: boolean }> = 
   );
 };
 
-export const LogoText: React.FC<{ size?: 'sm' | 'lg' }> = ({ size = 'lg' }) => {
+export const LogoText: React.FC<{ size?: 'sm' | 'lg'; color?: 'black' | 'white'; compact?: boolean }> = ({ size = 'lg', color = 'black', compact = false }) => {
+  const textColorClass = color === 'white' ? 'text-white' : 'text-black';
+  const subtextColorClass = color === 'white' ? 'text-gray-300' : 'text-gray-400';
+  const dividerColorClass = color === 'white' ? 'bg-white/30' : 'bg-black/30';
+  const secondaryTextColorClass = color === 'white' ? 'text-white/80' : 'text-black/80';
+
   if (size === 'sm') {
     return (
-      <div className="flex flex-col">
-        <span className="mono font-bold text-lg md:text-xl tracking-tight uppercase leading-none">
+      <div className={`flex flex-col transition-all duration-500 ${compact ? 'md:scale-100 scale-75' : 'scale-100'} origin-left`}>
+        <span className={`mono font-bold text-lg md:text-xl tracking-tight uppercase leading-none ${textColorClass}`}>
           Rik de Wit
         </span>
-        <span className="text-[10px] tracking-[0.3em] uppercase text-gray-400 font-medium leading-none mt-1">
+        <span className={`text-[10px] tracking-[0.3em] uppercase ${subtextColorClass} font-medium leading-none mt-1`}>
           Audio
         </span>
       </div>
@@ -129,11 +134,11 @@ export const LogoText: React.FC<{ size?: 'sm' | 'lg' }> = ({ size = 'lg' }) => {
 
   return (
     <div className="text-center w-full max-w-lg relative mx-auto">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl tracking-[0.3em] font-normal uppercase mono leading-none mb-3 whitespace-nowrap text-black">
+      <h1 className={`text-2xl sm:text-3xl md:text-4xl tracking-[0.3em] font-normal uppercase mono leading-none mb-3 whitespace-nowrap ${textColorClass}`}>
         RIK DE WIT
       </h1>
-      <div className="w-[35%] sm:w-[40%] md:w-1/2 h-[1px] bg-black/30 mx-auto mb-3 transition-all duration-500" />
-      <h2 className="text-lg sm:text-xl md:text-2xl tracking-[0.8em] font-light uppercase mono leading-none ml-[0.8em] text-black/80">
+      <div className={`w-[35%] sm:w-[40%] md:w-1/2 h-[1px] ${dividerColorClass} mx-auto mb-3 transition-all duration-500`} />
+      <h2 className={`text-lg sm:text-xl md:text-2xl tracking-[0.8em] font-light uppercase mono leading-none ml-[0.8em] ${secondaryTextColorClass}`}>
         AUDIO
       </h2>
     </div>
