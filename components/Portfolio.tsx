@@ -1,6 +1,7 @@
 
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { PORTFOLIO } from '../constants';
 
 const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) => {
@@ -127,9 +128,24 @@ const Portfolio: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {PORTFOLIO.map((item, index) => (
-            <PortfolioCard key={item.id} item={item} index={index} />
-          ))}
+          {PORTFOLIO.map((item, index) => {
+            const cardElement = <PortfolioCard key={item.id} item={item} index={index} />;
+
+            // Only wrap in Link if item has a slug
+            if (item.slug) {
+              return (
+                <Link
+                  key={item.id}
+                  href={`/projects/${item.slug}`}
+                  className="group block hover:no-underline"
+                >
+                  {cardElement}
+                </Link>
+              );
+            }
+
+            return cardElement;
+          })}
         </div>
       </div>
     </section>

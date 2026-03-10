@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.next
+next-env.d.ts
+out/
+package-lock.json
 
 # Editor directories and files
 .vscode/*
@@ -22,4 +26,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Workspace files
+*.code-workspace
 
