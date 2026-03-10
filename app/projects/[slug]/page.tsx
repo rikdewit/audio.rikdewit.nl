@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Metadata } from 'next';
-import { rookmelderDiscoMeta } from '@/projects/rookmelder-disco';
+import { rookmelderDiscoMeta } from '@/projects/rookmelder-disco/meta';
 
 // Dynamic imports for project components
 const projectComponents: Record<string, any> = {
