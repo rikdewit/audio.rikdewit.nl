@@ -15,9 +15,9 @@ const projectMetaMap: Record<string, any> = {
 
 // Route params interface
 interface Props {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static params for static export
@@ -29,7 +29,8 @@ export function generateStaticParams() {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const meta = projectMetaMap[params.slug];
+  const { slug } = await params;
+  const meta = projectMetaMap[slug];
 
   if (!meta) {
     notFound();
@@ -42,15 +43,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${meta.title} | Rik de Wit Audio`,
       description: meta.description,
       images: meta.thumbnail ? [{ url: meta.thumbnail }] : [],
-      url: `/projects/${params.slug}`,
+      url: `/projects/${slug}`,
     },
   };
 }
 
 // Default page component
 export default async function ProjectPage({ params }: Props) {
-  const Component = projectComponents[params.slug];
-  const meta = projectMetaMap[params.slug];
+  const { slug } = await params;
+  const Component = projectComponents[slug];
+  const meta = projectMetaMap[slug];
 
   if (!Component || !meta) {
     notFound();
