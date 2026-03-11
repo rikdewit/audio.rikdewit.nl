@@ -137,7 +137,7 @@ export default function RookmelderDiscoProject() {
                 <div>
                   <h3 className="text-xl font-bold mb-3 tracking-wide">Gitarist</h3>
                   <p className="text-gray-700 mb-4 text-base">
-                    Ik speel vooral ritme gitaar, heb geleerd hoe belangrijk ritme is en dat samen spelen belangrijker is dan alle noten perfect spelen. Ik leerde met een plectrum te spelen en kocht mijn eerste distortion pedaal.
+                    Als ritme gitarist focuste ik op samenwerking en het belang van solide groovewerk. Ik componeerde en arrangeerde gitaarpartijen voor de nummers, en nam deze op met mijn eerste distortion pedaal. Dit was een praktische toepassing van wat ik in het produceproces leerde.
                   </p>
                   <ul className="space-y-2 text-gray-700">
                     <li>Compositie en arrangement van gitaarpartijen</li>
@@ -199,6 +199,9 @@ export default function RookmelderDiscoProject() {
               </h2>
 
               <div className="space-y-8 text-lg text-gray-700 leading-relaxed mt-8">
+                <p>
+                  Ik speel vooral ritme gitaar, heb geleerd hoe belangrijk ritme is en dat samen spelen belangrijker is dan alle noten perfect spelen. Ik leerde met een plectrum te spelen en kocht mijn eerste distortion pedaal.
+                </p>
                 <p>
                   Een show geven die het publiek leuk vindt is het belangrijkste, niet hoe perfect je technisch
                   alles speelt. Contact maken met het publiek, plezier hebben.
