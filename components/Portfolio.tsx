@@ -67,19 +67,29 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
     }
   }, [isVisible, staggerDelay]);
 
+  const bgClass = item.slug === 'backstage-masters'
+    ? 'bg-gradient-to-br from-black to-gray-900'
+    : 'bg-gray-100';
+
   return (
-    <div 
+    <div
       ref={cardRef}
-      className="group relative aspect-[4/5] overflow-hidden bg-gray-100 cursor-pointer rounded-sm shadow-sm hover:shadow-2xl transition-shadow duration-500"
+      className={`group relative aspect-[4/5] overflow-hidden cursor-pointer rounded-sm shadow-sm hover:shadow-2xl transition-shadow duration-500 ${bgClass}`}
     >
-      <img 
-        src={item.imageUrl} 
+      <img
+        src={item.imageUrl}
         alt={item.title}
-        style={{ 
-          transitionDelay: (isVisible && !isAnimationComplete) ? `${staggerDelay}ms` : '0ms' 
+        style={{
+          transitionDelay: (isVisible && !isAnimationComplete) ? `${staggerDelay}ms` : '0ms'
         }}
-        className={`w-full h-full object-cover transition-all duration-[1500ms] ease-out group-hover:duration-500 group-hover:scale-110 ${
+        className={`w-full h-full transition-all duration-[1500ms] ease-out group-hover:duration-500 ${
+          item.slug === 'backstage-masters' ? 'group-hover:scale-[1.375]' : 'group-hover:scale-110'
+        } ${
+          item.slug === 'backstage-masters' ? 'object-contain' : 'object-cover'
+        } ${
           isVisible ? 'grayscale-0 scale-100' : 'grayscale scale-105'
+        } ${
+          item.slug === 'backstage-masters' ? 'scale-125' : ''
         }`}
       />
       
