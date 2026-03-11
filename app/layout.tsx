@@ -3,6 +3,7 @@ import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import { inter, jetbrainsMono, caveat } from "./fonts";
+import ScrollHandler from "./scroll-handler";
 
 // Define the base URL to ensure social images and canonicals work correctly
 const BASE_URL = 'https://audio.rikdewit.nl';
@@ -76,7 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="nl" className={`${inter.variable} ${jetbrainsMono.variable} ${caveat.variable}`}>
+    <html lang="nl" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable} ${caveat.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -157,6 +158,7 @@ export default function RootLayout({
       </head>
       <body className="bg-white text-black antialiased">
         {children}
+        <ScrollHandler />
         <script data-goatcounter="https://rikdewit-audio.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
       </body>
     </html>
