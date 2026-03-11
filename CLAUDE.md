@@ -29,3 +29,4 @@
 - Photos stored in `projects/[slug]/images/`
 - Spotify links, Instagram handles embedded directly in component code
 - Narrative content written as JSX/components, not markdown
+- When editing narrative text: reorganize and reorder existing sentences only. Never add new phrases, metaphors, or descriptive language. Do not use em-dashes (—) in text; use commas, semicolons, or break into new sentences instead.

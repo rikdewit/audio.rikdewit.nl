@@ -45,7 +45,7 @@ const OptionCard = ({ label, isSelected, onClick, icon: Icon, shouldAnimate = fa
         <div className={`w-6 h-6 sm:w-7 sm:h-7 shrink-0 rounded-full border flex items-center justify-center transition-all ${isSelected ? 'bg-black border-black text-white' : 'border-gray-200 text-gray-400 group-hover:border-black group-hover:text-black'}`}>
           {Icon ? <Icon size={12} /> : <Check size={12} className={isSelected ? 'opacity-100' : 'opacity-0'} />}
         </div>
-        <span className={`mono text-[10px] sm:text-xs uppercase tracking-widest font-bold ${isSelected ? 'text-black' : 'text-gray-500 group-hover:text-black'}`}>{label}</span>
+        <span className={`mono text-[10px] sm:text-xs uppercase tracking-widest font-bold text-black`}>{label}</span>
       </div>
     </div>
   </div>
@@ -61,7 +61,7 @@ const CheckboxCard = ({ label, isSelected, onToggle, disabled = false }: any) =>
       <div className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 border flex items-center justify-center transition-all duration-300 ${!disabled && isSelected ? 'bg-black border-black scale-110' : 'border-gray-300 bg-white group-hover:border-gray-400'}`}>
         {isSelected && <Check size={10} className="text-white" />}
       </div>
-      <span className={`mono text-[9px] sm:text-[10px] uppercase tracking-widest font-bold transition-colors ${!disabled && isSelected ? 'text-black' : 'text-gray-500 group-hover:text-black'}`}>{label}</span>
+      <span className={`mono text-[9px] sm:text-[10px] uppercase tracking-widest font-bold transition-colors text-black`}>{label}</span>
     </div>
   </div>
 );
@@ -931,15 +931,15 @@ const OnboardingForm: React.FC = () => {
               
               <div className="px-5 sm:px-8 pt-4 sm:pt-6 pb-1 shrink-0">
                 <div className="flex justify-between mb-2 sm:mb-3">
-                  <div className={`flex flex-col transition-all duration-500 ${currentPhase >= 1 ? 'opacity-100' : 'opacity-20'}`}>
+                  <div className={`flex flex-col transition-all duration-500 ${currentPhase >= 1 ? 'opacity-100' : 'opacity-40'}`}>
                     <span className="mono text-[8px] font-bold tracking-widest mb-1 text-gray-400">01</span>
                     <span className={`text-[9px] sm:text-[10px] font-bold tracking-widest uppercase ${currentPhase === 1 ? 'text-black' : 'text-gray-400'}`}>Selectie</span>
                   </div>
-                  <div className={`flex flex-col items-center transition-all duration-500 ${currentPhase >= 2 ? 'opacity-100' : 'opacity-20'}`}>
+                  <div className={`flex flex-col items-center transition-all duration-500 ${currentPhase >= 2 ? 'opacity-100' : 'opacity-40'}`}>
                     <span className="mono text-[8px] font-bold tracking-widest mb-1 text-gray-400">02</span>
                     <span className={`text-[9px] sm:text-[10px] font-bold tracking-widest uppercase ${currentPhase === 2 ? 'text-black' : 'text-gray-400'}`}>Details</span>
                   </div>
-                  <div className={`flex flex-col items-end transition-all duration-500 ${currentPhase >= 3 ? 'opacity-100' : 'opacity-20'}`}>
+                  <div className={`flex flex-col items-end transition-all duration-500 ${currentPhase >= 3 ? 'opacity-100' : 'opacity-40'}`}>
                     <span className="mono text-[8px] font-bold tracking-widest mb-1 text-gray-400">03</span>
                     <span className={`text-[9px] sm:text-[10px] font-bold tracking-widest uppercase ${currentPhase === 3 ? 'text-black' : 'text-gray-400'}`}>Contact</span>
                   </div>
