@@ -30,3 +30,4 @@ package-lock.json
 # Workspace files
 *.code-workspace
 
+.vercel
