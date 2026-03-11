@@ -20,6 +20,12 @@
 - ❌ NEVER commit generated files (build output, static exports)
 - These go in `.gitignore`
 
+### Branching Strategy
+- **main** — production branch (stable, deployment-ready)
+- **develop** — development branch (where changes are made)
+- **When making changes:** Always switch to `develop` branch first unless explicitly told otherwise
+- **To deploy:** Merge `develop` into `main`
+
 ## Workflow
 - **Don't commit code** until explicitly asked
 - Always **check CLAUDE.md first** before making architectural decisions
