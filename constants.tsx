@@ -164,7 +164,7 @@ export const SERVICES: Service[] = [
 
 export const PORTFOLIO: PortfolioItem[] = [
   { id: 1, imageUrl: '/projects/rookmelder-disco/images/04-band.jpg', category: 'Artiest / Band', title: 'Rookmelder Disco', slug: 'rookmelder-disco' },
-  { id: 2, imageUrl: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=800', category: 'Evenementen', title: 'Bedrijfsfeest XL' },
+  { id: 2, imageUrl: '/projects/backstage-masters/images/logo.png', category: 'Stagehand', title: 'Backstage Masters', slug: 'backstage-masters' },
   { id: 3, imageUrl: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80&w=800', category: 'Support', title: 'Studio Inrichting' },
   { id: 4, imageUrl: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800', category: 'Live Mixing', title: 'Festival Zomer' },
   { id: 5, imageUrl: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800', category: 'Evenementen', title: 'Product Lancering' },

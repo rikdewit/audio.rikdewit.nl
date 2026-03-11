@@ -6,11 +6,16 @@ import { rookmelderDiscoMeta } from '@/projects/rookmelder-disco/meta';
 // Dynamic imports for project components
 const projectComponents: Record<string, any> = {
   'rookmelder-disco': dynamic(() => import('@/projects/rookmelder-disco')),
+  'backstage-masters': dynamic(() => import('@/projects/backstage-masters')),
 };
 
 // Metadata map for projects
 const projectMetaMap: Record<string, any> = {
   'rookmelder-disco': rookmelderDiscoMeta,
+  'backstage-masters': {
+    title: 'Backstage Masters',
+    description: 'Professionele stagecrew bij Backstage Masters. Work achter de schermen van live muziek en events bij de Ziggo Dome en AFAS Live.',
+  },
 };
 
 // Route params interface
