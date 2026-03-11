@@ -5,7 +5,7 @@ export const inter = Inter({
   weight: ['300', '400', '500', '600', '700'],
   variable: '--font-inter',
   preload: true,
-  display: 'swap',
+  display: 'block',
 });
 
 export const jetbrainsMono = JetBrains_Mono({
@@ -13,7 +13,7 @@ export const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500'],
   variable: '--font-mono',
   preload: false,
-  display: 'swap',
+  display: 'block',
 });
 
 export const caveat = Caveat({
@@ -21,5 +21,5 @@ export const caveat = Caveat({
   weight: ['400'],
   variable: '--font-caveat',
   preload: false,
-  display: 'swap',
+  display: 'block',
 });
