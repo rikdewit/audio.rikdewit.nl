@@ -30,6 +30,8 @@ export default function RookmelderDiscoProject() {
           className="object-cover"
           sizes="100vw"
           priority
+          placeholder="blur"
+          blurDataURL={rookmelderDiscoMeta.images.liveBlur}
         />
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/30" />
@@ -107,6 +109,9 @@ export default function RookmelderDiscoProject() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+                placeholder="blur"
+                blurDataURL={rookmelderDiscoMeta.images.bandBlur}
               />
             </div>
           </div>
@@ -125,6 +130,9 @@ export default function RookmelderDiscoProject() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={rookmelderDiscoMeta.images.guitarBlur}
               />
             </div>
 
@@ -230,6 +238,9 @@ export default function RookmelderDiscoProject() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL={rookmelderDiscoMeta.images.performanceBlur}
               />
             </div>
           </div>

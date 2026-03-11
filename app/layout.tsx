@@ -2,6 +2,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
+import { inter, jetbrainsMono, caveat } from "./fonts";
 
 // Define the base URL to ensure social images and canonicals work correctly
 const BASE_URL = 'https://audio.rikdewit.nl';
@@ -75,9 +76,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="nl" className="scroll-smooth">
+    <html lang="nl" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable} ${caveat.variable}`}>
       <head>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
