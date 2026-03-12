@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import ProjectNavbar from '../../components/ProjectNavbar';
+import FadeImage from '../../components/FadeImage';
 
 const backstageMastersMeta = {
   title: 'Backstage Masters',
@@ -32,17 +32,15 @@ export default function BackstageMastersProject() {
       />
 
       {/* Full-width Banner with Logo */}
-      <section className="relative w-full aspect-video md:aspect-[16/6] bg-gradient-to-br from-black to-gray-900">
-        <div className="absolute inset-0 flex items-center justify-center px-6">
-          <Image
-            src={backstageMastersMeta.images.logo}
-            alt="Backstage Masters Logo"
-            width={999}
-            height={461}
-            className="w-auto h-auto max-h-full max-w-full object-contain drop-shadow-2xl"
-            priority
-          />
-        </div>
+      <section className="relative w-full aspect-video md:aspect-[16/6] bg-gradient-to-br from-black to-gray-900 flex items-center justify-center px-6">
+        <FadeImage
+          src={backstageMastersMeta.images.logo}
+          alt="Backstage Masters Logo"
+          width={999}
+          height={461}
+          priority
+          className="w-auto h-auto max-h-full max-w-full object-contain drop-shadow-2xl"
+        />
       </section>
 
       {/* Project Info Section */}

@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import ProjectNavbar from '../../components/ProjectNavbar';
+import FadeImage from '../../components/FadeImage';
 import { rookmelderDiscoMeta } from './meta';
 
 // Extract artist ID from Spotify URL for embed
@@ -23,15 +23,14 @@ export default function RookmelderDiscoProject() {
 
       {/* Full-width Live Performance Banner */}
       <section className="relative w-full aspect-video md:aspect-[16/6]">
-        <Image
+        <FadeImage
           src={rookmelderDiscoMeta.images.live}
           alt="Rookmelder Disco live performance banner"
+          blurDataURL={rookmelderDiscoMeta.images.liveBlur}
           fill
-          className="object-cover"
           sizes="100vw"
           priority
-          placeholder="blur"
-          blurDataURL={rookmelderDiscoMeta.images.liveBlur}
+          containerClassName="absolute inset-0 w-full h-full bg-cover bg-center"
         />
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/30" />
@@ -102,18 +101,15 @@ export default function RookmelderDiscoProject() {
             </div>
 
             {/* Band Photo */}
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-gray-100">
-              <Image
-                src={rookmelderDiscoMeta.images.band}
-                alt="Rookmelder Disco band"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-                placeholder="blur"
-                blurDataURL={rookmelderDiscoMeta.images.bandBlur}
-              />
-            </div>
+            <FadeImage
+              src={rookmelderDiscoMeta.images.band}
+              alt="Rookmelder Disco band"
+              blurDataURL={rookmelderDiscoMeta.images.bandBlur}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+              containerClassName="relative aspect-[4/5] overflow-hidden rounded-sm bg-cover bg-center"
+            />
           </div>
         </div>
       </section>
@@ -123,18 +119,15 @@ export default function RookmelderDiscoProject() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Guitar Photo */}
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-gray-100">
-              <Image
-                src={rookmelderDiscoMeta.images.guitar}
-                alt="Rik de Wit with guitar"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                loading="lazy"
-                placeholder="blur"
-                blurDataURL={rookmelderDiscoMeta.images.guitarBlur}
-              />
-            </div>
+            <FadeImage
+              src={rookmelderDiscoMeta.images.guitar}
+              alt="Rik de Wit with guitar"
+              blurDataURL={rookmelderDiscoMeta.images.guitarBlur}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="lazy"
+              containerClassName="relative aspect-[4/5] overflow-hidden rounded-sm bg-cover bg-center"
+            />
 
             <div>
               <h2 className="text-3xl md:text-5xl font-light tracking-tight leading-none mb-12">
@@ -231,18 +224,15 @@ export default function RookmelderDiscoProject() {
             </div>
 
             {/* Performance Photo */}
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-gray-100">
-              <Image
-                src={rookmelderDiscoMeta.images.performance}
-                alt="Rookmelder Disco performance"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                loading="lazy"
-                placeholder="blur"
-                blurDataURL={rookmelderDiscoMeta.images.performanceBlur}
-              />
-            </div>
+            <FadeImage
+              src={rookmelderDiscoMeta.images.performance}
+              alt="Rookmelder Disco performance"
+              blurDataURL={rookmelderDiscoMeta.images.performanceBlur}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="lazy"
+              containerClassName="relative aspect-[4/5] overflow-hidden rounded-sm bg-cover bg-center"
+            />
           </div>
         </div>
       </section>
