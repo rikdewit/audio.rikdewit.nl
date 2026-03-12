@@ -27,9 +27,11 @@
 - **To deploy:** Merge `develop` into `main`
 
 ## Workflow
-- **Don't commit code** until explicitly asked
+- **Never auto-commit** — always show changes first and wait for approval before committing
+- Make changes but leave them staged/unstaged for review
 - Always **check CLAUDE.md first** before making architectural decisions
 - Use this file as the source of truth for project conventions
+- Communicate only in English
 
 ## Content Strategy
 - Photos stored in `projects/[slug]/images/`

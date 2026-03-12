@@ -77,7 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="nl" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable} ${caveat.variable}`}>
+    <html lang="nl" className={`${inter.variable} ${jetbrainsMono.variable} ${caveat.variable}`}>
       <head>
         <script
           type="application/ld+json"
