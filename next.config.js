@@ -2,6 +2,13 @@
 const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+    minimumCacheTTL: 31536000, // 1 year for immutable images
   },
   headers: async () => [
     {
