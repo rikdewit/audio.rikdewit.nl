@@ -2,6 +2,7 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PORTFOLIO } from '../constants';
 
 const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) => {
@@ -76,13 +77,15 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
       ref={cardRef}
       className={`group relative aspect-[4/5] overflow-hidden cursor-pointer rounded-sm shadow-sm hover:shadow-2xl transition-shadow duration-500 ${bgClass}`}
     >
-      <img
+      <Image
         src={item.imageUrl}
         alt={item.title}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         style={{
           transitionDelay: (isVisible && !isAnimationComplete) ? `${staggerDelay}ms` : '0ms'
         }}
-        className={`w-full h-full transition-all duration-[1500ms] ease-out group-hover:duration-500 ${
+        className={`transition-all duration-[1500ms] ease-out group-hover:duration-500 ${
           item.slug === 'backstage-masters' ? 'group-hover:scale-[1.375]' : 'group-hover:scale-110'
         } ${
           item.slug === 'backstage-masters' ? 'object-contain' : 'object-cover'
@@ -91,6 +94,7 @@ const PortfolioCard: React.FC<{ item: any; index: number }> = ({ item, index }) 
         } ${
           item.slug === 'backstage-masters' ? 'scale-125' : ''
         }`}
+        priority={index < 3}
       />
       
       <div 
